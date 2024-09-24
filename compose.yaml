@@ -1,0 +1,26 @@
+services:
+#  server:
+#    build:
+#      context: .
+#    ports:
+#      - 8888:8888
+
+  auth-db:
+    image: postgres:16.3
+    restart: always
+    user: postgres
+    env_file:
+      - path: ./.env/docker.env
+    volumes:
+      - s-service-data:/var/lib/postgresql/data
+    ports:
+      - 5555:5432
+    healthcheck:
+      test: [ "CMD", "pg_isready" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+volumes:
+  s-service-data:
+
+

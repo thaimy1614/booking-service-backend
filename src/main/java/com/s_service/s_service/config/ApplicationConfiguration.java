@@ -1,5 +1,8 @@
 package com.s_service.s_service.config;
 
+import com.s_service.s_service.model.Account;
+import com.s_service.s_service.model.Role;
+import com.s_service.s_service.repository.AccountRepository;
 import com.s_service.s_service.repository.RoleRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,58 +22,44 @@ public class ApplicationConfiguration {
     private final RoleRepository roleRepository;
 
     @Bean
-    ApplicationRunner applicationRunner(UserRepository userRepository) {
+    ApplicationRunner applicationRunner(AccountRepository accountRepository) {
         return args -> {
             // Default student role
-            if (!roleRepository.existsById("USER")) {
-                Set<Permission> userPermission = Set.of(
-                        permissionRepository.save(
-                                Permission.builder().name("USER_PERMS").description("All user perm").build()
-                        )
+            if (!roleRepository.existsById(1)) {
+                roleRepository.save(
+                        Role.builder()
+                                .id(1)
+                                .role(Role.UserRole.ADMIN)
+                                .description("ADMIN ROLE")
+                                .build()
                 );
                 roleRepository.save(
-                        Role.builder().
-                                name("USER")
-                                .description("User_role")
-                                .permissions(userPermission)
+                        Role.builder()
+                                .id(2)
+                                .role(Role.UserRole.STAFF)
+                                .description("STAFF ROLE")
+                                .build()
+                );
+                roleRepository.save(
+                        Role.builder()
+                                .id(3)
+                                .role(Role.UserRole.CUSTOMER)
+                                .description("CUSTOMER ROLE")
                                 .build()
                 );
             }
 
             // Default admin account
-            if (userRepository.findByEmail("admin@mail").isEmpty()) {
-                Set<Permission> adminPerms = Set.of(
-                        permissionRepository.save(
-                                Permission.builder().name("BLOCK_USER").description("Block account").build()
-                        ),
-                        permissionRepository.save(
-                                Permission.builder().name("DELETE_USER").description("Delete account").build()
-                        ),
-                        permissionRepository.save(
-                                Permission.builder().name("ADMIN_PERMS").description("All admin perm").build()
-                        )
-                );
-
-                // default admin roles
-                Set<Role> roles = Set.of(
-                        roleRepository.save(
-                                Role.builder()
-                                        .name("ADMIN")
-                                        .description("Admin_role")
-                                        .permissions(adminPerms)
-                                        .build()
-                        )
-                );
-
+            if (accountRepository.findByUsername("admin").isEmpty()) {
                 //admin account
-                User account = User
+                Account account = Account
                         .builder()
-                        .email("admin@mail")
+                        .username("admin")
                         .password(passwordEncoder.encode("123"))
-                        .roles(roles)
-                        .status(UserStatus.ACTIVATED)
+                        .roles(roleRepository.findById(1).orElse(Role.builder().role(Role.UserRole.ADMIN).description("ADMIN ROLE").build()))
+                        .status(Account.AccountStatus.ACTIVE)
                         .build();
-                userRepository.save(account);
+                accountRepository.save(account);
             }
         };
     }

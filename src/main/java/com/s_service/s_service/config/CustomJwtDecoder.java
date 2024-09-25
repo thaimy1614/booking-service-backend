@@ -3,7 +3,6 @@ package com.s_service.s_service.config;
 import com.nimbusds.jose.JOSEException;
 import com.s_service.s_service.service.authentication.AuthenticationService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.oauth2.jose.jws.MacAlgorithm;
 import org.springframework.security.oauth2.jwt.Jwt;
@@ -19,11 +18,9 @@ import java.util.Objects;
 @Component
 @RequiredArgsConstructor
 public class CustomJwtDecoder implements JwtDecoder {
+    private final AuthenticationService authenticationService;
     @Value("${jwt.signer-key}")
     private String KEY;
-
-    private final AuthenticationService authenticationService;
-
     private NimbusJwtDecoder nimbusJwtDecoder = null;
 
     @Override

@@ -50,7 +50,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private SignedJWT verifyToken(String token, boolean isRefresh) throws Exception {
         JWSVerifier verifier = new MACVerifier(KEY.getBytes());
         SignedJWT signedJWT = SignedJWT.parse(token);
-        Date expiryTime = (isRefresh) ? new Date(signedJWT.getJWTClaimsSet().getIssueTime().toInstant().plus(Long.parseLong(REFRESHABLE_DURATION), ChronoUnit.SECONDS).toEpochMilli()) : signedJWT.getJWTClaimsSet().getExpirationTime();
+        Date expiryTime = (isRefresh) ? new Date(signedJWT.getJWTClaimsSet().getIssueTime().toInstant().plus(Long.parseLong(REFRESHABLE_DURATION), ChronoUnit.SECONDS).toEpochMilli())
+                : signedJWT.getJWTClaimsSet().getExpirationTime();
         var verified = signedJWT.verify(verifier);
         if (!(verified && expiryTime.after(new Date()))) {
             throw new Exception("UNAUTHENTICATED");
@@ -62,11 +63,10 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         return signedJWT;
     }
 
-    public boolean introspect(String token) throws Exception {
+    public boolean introspect(String token) {
         boolean isValid = true;
         try {
             verifyToken(token, false);
-
         } catch (Exception e) {
             isValid = false;
         }

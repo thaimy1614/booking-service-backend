@@ -1,15 +1,20 @@
 package com.s_service.s_service.service.authentication;
 
-import com.nimbusds.jose.JWSVerifier;
+import com.nimbusds.jose.*;
+import com.nimbusds.jose.crypto.MACSigner;
 import com.nimbusds.jose.crypto.MACVerifier;
+import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
+import com.s_service.s_service.model.Account;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -22,6 +27,25 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private long EXPIRATION_DURATION;
     @Value("${jwt.refreshable-duration}")
     private String REFRESHABLE_DURATION;
+
+    private String generateToken(Account account) throws JOSEException {
+        JWSHeader jwsHeader = new JWSHeader(JWSAlgorithm.HS512);
+        JWTClaimsSet jwtClaimsSet = new JWTClaimsSet
+                .Builder()
+                .subject(account.getId())
+                .issuer("Thaidq")
+                .issueTime(new Date())
+                .expirationTime(new Date(Instant.now().plus(EXPIRATION_DURATION, ChronoUnit.SECONDS).toEpochMilli()))
+                .claim("scope", account.getRoles().getRole().name())
+                .jwtID(UUID.randomUUID().toString())
+                .build();
+
+        Payload payload = new Payload(jwtClaimsSet.toJSONObject());
+
+        JWSObject jwsObject = new JWSObject(jwsHeader, payload);
+        jwsObject.sign(new MACSigner(KEY));
+        return jwsObject.serialize();
+    }
 
     private SignedJWT verifyToken(String token, boolean isRefresh) throws Exception {
         JWSVerifier verifier = new MACVerifier(KEY.getBytes());

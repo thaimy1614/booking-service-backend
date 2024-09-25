@@ -1,7 +1,6 @@
 package com.s_service.s_service.config;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -28,8 +27,9 @@ public class SecurityConfig {
                         oauth2.jwt(
                                 jwtConfigurer -> jwtConfigurer
                                         .decoder(customJwtDecoder)
-                                        .jwtAuthenticationConverter(converter())
-                        ));
+                                        .jwtAuthenticationConverter(converter()))
+                                .authenticationEntryPoint(new JwtAuthenticationEntryPoint())
+        );
 
         http.csrf(AbstractHttpConfigurer::disable);
         return http.build();

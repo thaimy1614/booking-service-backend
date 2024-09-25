@@ -1,11 +1,11 @@
 package com.s_service.s_service.service.authentication;
 
 import com.nimbusds.jose.JOSEException;
+import com.s_service.s_service.dto.request.LoginRequest;
 import com.s_service.s_service.dto.response.LoginResponse;
-import com.s_service.s_service.model.Account;
 
 public interface AuthenticationService {
-    LoginResponse authenticate(Account account) throws JOSEException;
+    LoginResponse authenticate(LoginRequest request) throws JOSEException;
 
     boolean introspect(String token);
 

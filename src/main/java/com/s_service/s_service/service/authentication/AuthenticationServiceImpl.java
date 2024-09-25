@@ -5,6 +5,7 @@ import com.nimbusds.jose.crypto.MACSigner;
 import com.nimbusds.jose.crypto.MACVerifier;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
+import com.s_service.s_service.dto.request.LoginRequest;
 import com.s_service.s_service.dto.response.LoginResponse;
 import com.s_service.s_service.exception.AppException;
 import com.s_service.s_service.exception.ErrorCode;
@@ -37,18 +38,22 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Value("${jwt.refreshable-duration}")
     private String REFRESHABLE_DURATION;
 
-    public LoginResponse authenticate(Account account) throws JOSEException {
-        log.info("{} - {}", account.getEmail(), account.getPassword());
-        Account authUser = accountRepository.findByEmail(account.getEmail()).orElseThrow(
+    public LoginResponse authenticate(LoginRequest request) throws JOSEException {
+        String email = request.getEmail();
+        String username = request.getUsername();
+        String password = request.getPassword();
+        log.info("{} - {} - {}", request.getEmail(), request.getUsername(), request.getPassword());
+        username = (email == null) ? username : email;
+        Account authUser = accountRepository.findByEmail(username).orElseThrow(
                 () -> new AppException(ErrorCode.USER_NOT_EXISTED));
-        boolean check = passwordEncoder.matches(account.getPassword(), authUser.getPassword());
+        boolean check = passwordEncoder.matches(password, authUser.getPassword());
         if (!check) {
             return null;
         }
         var token = generateToken(authUser);
         return LoginResponse.builder()
                 .token(token)
-                .userRole(account.getRoles().getRole())
+                .userRole(authUser.getRoles().getRole())
                 .build();
     }
 

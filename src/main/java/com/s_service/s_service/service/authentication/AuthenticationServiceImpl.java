@@ -81,4 +81,12 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         redisTemplate.opsForValue().set("bl_" + jwtId, jwtId);
         redisTemplate.expireAt("bl_" + jwtId, expiryTime);
     }
+
+    public void logout(String token) throws Exception {
+        var signedJWT = verifyToken(token, true);
+        String jId = signedJWT.getJWTClaimsSet().getJWTID();
+        Date expiryTime = signedJWT.getJWTClaimsSet().getExpirationTime();
+
+        addTokenToBlacklist(jId, expiryTime);
+    }
 }

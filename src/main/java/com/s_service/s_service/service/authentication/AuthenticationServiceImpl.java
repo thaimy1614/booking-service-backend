@@ -3,14 +3,19 @@ package com.s_service.s_service.service.authentication;
 import com.nimbusds.jose.JWSVerifier;
 import com.nimbusds.jose.crypto.MACVerifier;
 import com.nimbusds.jwt.SignedJWT;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 
 @Service
+@RequiredArgsConstructor
 public class AuthenticationServiceImpl implements AuthenticationService {
+    private final RedisTemplate<String, String> redisTemplate;
+
     @Value("${jwt.signer-key}")
     private String KEY;
     @Value("${jwt.expiration-duration}")

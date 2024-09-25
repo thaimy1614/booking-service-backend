@@ -1,6 +1,7 @@
 package com.s_service.s_service.config;
 
 import com.nimbusds.jose.JOSEException;
+import com.s_service.s_service.service.authentication.AuthenticationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,10 +22,23 @@ public class CustomJwtDecoder implements JwtDecoder {
     @Value("${jwt.signer-key}")
     private String KEY;
 
+    private final AuthenticationService authenticationService;
+
     private NimbusJwtDecoder nimbusJwtDecoder = null;
 
     @Override
     public Jwt decode(String token) throws JwtException {
+        try {
+            var response = authenticationService.introspect(token);
+            if (!response) {
+                throw new JwtException("Token invalid");
+            }
+        } catch (JOSEException | ParseException e) {
+            throw new JwtException(e.getMessage());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
         if (Objects.isNull(nimbusJwtDecoder)) {
             SecretKeySpec secretKeySpec = new SecretKeySpec(KEY.getBytes(), "HS512");
             nimbusJwtDecoder = NimbusJwtDecoder

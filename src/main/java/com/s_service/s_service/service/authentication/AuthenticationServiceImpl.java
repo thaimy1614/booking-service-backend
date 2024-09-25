@@ -5,10 +5,16 @@ import com.nimbusds.jose.crypto.MACSigner;
 import com.nimbusds.jose.crypto.MACVerifier;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
+import com.s_service.s_service.dto.response.LoginResponse;
+import com.s_service.s_service.exception.AppException;
+import com.s_service.s_service.exception.ErrorCode;
 import com.s_service.s_service.model.Account;
+import com.s_service.s_service.repository.AccountRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -18,8 +24,11 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class AuthenticationServiceImpl implements AuthenticationService {
     private final RedisTemplate<String, String> redisTemplate;
+    private final AccountRepository accountRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Value("${jwt.signer-key}")
     private String KEY;
@@ -27,6 +36,21 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private long EXPIRATION_DURATION;
     @Value("${jwt.refreshable-duration}")
     private String REFRESHABLE_DURATION;
+
+    public LoginResponse authenticate(Account account) throws JOSEException {
+        log.info("{} - {}", account.getEmail(), account.getPassword());
+        Account authUser = accountRepository.findByEmail(account.getEmail()).orElseThrow(
+                () -> new AppException(ErrorCode.USER_NOT_EXISTED));
+        boolean check = passwordEncoder.matches(account.getPassword(), authUser.getPassword());
+        if (!check) {
+            return null;
+        }
+        var token = generateToken(authUser);
+        return LoginResponse.builder()
+                .token(token)
+                .userRole(account.getRoles().getRole())
+                .build();
+    }
 
     private String generateToken(Account account) throws JOSEException {
         JWSHeader jwsHeader = new JWSHeader(JWSAlgorithm.HS512);

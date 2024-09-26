@@ -13,7 +13,6 @@ import java.util.UUID;
 @Builder
 public class Profile {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
     private String name;

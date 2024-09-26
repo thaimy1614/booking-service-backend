@@ -176,19 +176,24 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         // Onboard user
         var user = accountRepository.findByEmail(userInfo.getEmail()).orElseGet(
                 () -> {
-                    Profile profile = Profile.builder()
-                            .email(userInfo.getEmail())
-                            .name(userInfo.getGivenName() + userInfo.getFamilyName())
-                            .address(userInfo.getLocale())
-                            .build();
-                    String id = profile.getId();
-                    return accountRepository.save(Account.builder()
-                            .id(id)
+                    Account account = accountRepository.save(Account.builder()
                             .username(userInfo.getEmail())
                             .email(userInfo.getEmail())
                             .roles(role)
                             .status(Account.AccountStatus.ACTIVE)
                             .build());
+
+                    Profile profile = Profile.builder()
+                            .id(account.getId())
+                            .email(userInfo.getEmail())
+                            .name(userInfo.getGivenName() + userInfo.getFamilyName())
+                            .address(userInfo.getLocale())
+                            .build();
+
+                    profileService.saveProfile(profile);
+
+                    return account;
+
                 });
         // Generate token
         var token = generateToken(user);
@@ -206,14 +211,16 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                         .ifPresent(ex->{throw new AppException(ErrorCode.USER_EXISTED);});
         accountRepository.findByUsername(request.getUsername())
                         .ifPresent(ex->{throw new AppException(ErrorCode.USER_EXISTED);});
-        Profile profile = profileService.saveProfile(profileMapper.toProfile(request));
-
         Account account = accountMapper.toAccount(request);
         account.setPassword(passwordEncoder.encode(request.getPassword()));
         account.setRoles(roleRepository.findByRole(Role.UserRole.CUSTOMER));
         account.setStatus(Account.AccountStatus.INACTIVE);
-        account.setId(profile.getId());
         account = accountRepository.save(account);
+
+        Profile profile = profileMapper.toProfile(request);
+        profile.setId(account.getId());
+        profileService.saveProfile(profile);
+
         if (account.getStatus() == Account.AccountStatus.INACTIVE) {
             String UUID = java.util.UUID.randomUUID().toString();
             try {

@@ -40,7 +40,7 @@ public class AuthenticationController {
 
     //Insert new User with POST method
     @PostMapping("/signup")
-    ResponseEntity<ResponseObject> insertUser(@RequestBody UserRequest newUser) {
+    ApiResponse<SignupResponse> insertUser(@RequestBody UserRequest newUser) {
 //        log.info("Create user");
         Optional<User> foundUser = userService.findUserByName(newUser.getEmail());
         if (foundUser.isPresent()) {

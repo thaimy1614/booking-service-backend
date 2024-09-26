@@ -17,9 +17,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
-import java.util.Set;
-import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
@@ -44,13 +41,10 @@ public class AuthenticationController {
     @PostMapping("/signup")
     ApiResponse<SignupResponse> signup(@RequestBody SignupRequest request) {
         SignupResponse response = accountService.signup(request);
-
-            return profileResponse ? ResponseEntity.status(HttpStatus.OK)
-                    .body(new ResponseObject("OK", "Insert User successful!", user))
-                    : ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new ResponseObject("FAIL", "Insert User fail!", null))
-                    ;
-        }
+        return ApiResponse.<SignupResponse>builder()
+                .message("Signup successfully, please go to email to verify your email address.")
+                .result(response)
+                .build();
     }
 
 

@@ -5,6 +5,7 @@ import com.nimbusds.jose.crypto.MACSigner;
 import com.nimbusds.jose.crypto.MACVerifier;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
+import com.s_service.s_service.dto.request.ChangePasswordRequest;
 import com.s_service.s_service.dto.request.ExchangeTokenRequest;
 import com.s_service.s_service.dto.request.LoginRequest;
 import com.s_service.s_service.dto.request.SignupRequest;
@@ -28,6 +29,7 @@ import lombok.experimental.NonFinal;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -224,5 +226,19 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             emailService.sendVerification(profile.getName(), profile.getEmail(), "http://localhost:8080/identity/verify?email=" + profile.getEmail() + "&code=" + UUID);
         }
         return SignupResponse.builder().success(true).build();
+    }
+
+    @Override
+    public void changePassword(ChangePasswordRequest request) {
+        var auth = SecurityContextHolder.getContext().getAuthentication();
+        String id = auth.getName();
+        Account account = accountRepository.findById(id).orElseThrow(
+                () -> new AppException(ErrorCode.USER_NOT_EXISTED));
+        if (passwordEncoder.matches(request.getOldPassword(), account.getPassword())) {
+            account.setPassword(passwordEncoder.encode(request.getNewPassword()));
+            accountRepository.save(account);
+        } else {
+            throw new AppException(ErrorCode.UNCATEGORIZED_EXCEPTION);
+        }
     }
 }

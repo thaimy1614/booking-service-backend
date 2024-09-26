@@ -3,6 +3,7 @@ package com.s_service.s_service.controller;
 
 import com.nimbusds.jose.JOSEException;
 import com.s_service.s_service.dto.ApiResponse;
+import com.s_service.s_service.dto.request.ChangePasswordRequest;
 import com.s_service.s_service.dto.request.LoginRequest;
 import com.s_service.s_service.dto.request.LogoutRequest;
 import com.s_service.s_service.dto.request.SignupRequest;
@@ -14,7 +15,6 @@ import com.s_service.s_service.service.profile.ProfileService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -65,16 +65,16 @@ public class AuthenticationController {
         return ApiResponse.builder().message("Logout successfully!").result(true).build();
     }
 
-    @GetMapping("/refresh")
-    ResponseEntity<ResponseObject> refreshToken(@RequestBody RefreshTokenRequest request) throws Exception {
-        String token = authService.refreshToken(request);
-        return ResponseEntity.ok(new ResponseObject("OK", "Refresh token successful!", token));
-    }
+//    @GetMapping("/refresh")
+//    ResponseEntity<ResponseObject> refreshToken(@RequestBody RefreshTokenRequest request) throws Exception {
+//        String token = authService.refreshToken(request);
+//        return ResponseEntity.ok(new ResponseObject("OK", "Refresh token successful!", token));
+//    }
 
     @PostMapping("/change-password")
-    ResponseEntity<ResponseObject> changePassword(@RequestBody ChangePasswordRequest request) throws Exception {
-        ChangePasswordResponse response = authService.changePassword(request);
-        return ResponseEntity.ok().body(new ResponseObject("OK", "Change password successful!", response));
+    ApiResponse<Object> changePassword(@RequestBody ChangePasswordRequest request) {
+        accountService.changePassword(request);
+        return ApiResponse.builder().message("Password changed successfully!").result(true).build();
     }
 
     @PostMapping("/forget-password/send-otp")

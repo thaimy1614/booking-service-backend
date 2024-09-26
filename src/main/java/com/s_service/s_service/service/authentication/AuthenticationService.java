@@ -11,5 +11,5 @@ public interface AuthenticationService {
 
     void logout(String token) throws Exception;
 
-    LoginResponse outboundAuthenticate(String code);
+    LoginResponse outboundAuthenticate(String code) throws JOSEException;
 }

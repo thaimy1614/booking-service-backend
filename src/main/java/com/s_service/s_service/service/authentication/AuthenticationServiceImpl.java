@@ -13,9 +13,11 @@ import com.s_service.s_service.exception.ErrorCode;
 import com.s_service.s_service.httpclient.OutboundIdentityClient;
 import com.s_service.s_service.httpclient.OutboundUserClient;
 import com.s_service.s_service.model.Account;
+import com.s_service.s_service.model.Profile;
 import com.s_service.s_service.model.Role;
 import com.s_service.s_service.repository.AccountRepository;
 import com.s_service.s_service.repository.RoleRepository;
+import com.s_service.s_service.service.profile.ProfileService;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.NonFinal;
 import lombok.extern.slf4j.Slf4j;
@@ -27,7 +29,6 @@ import org.springframework.stereotype.Service;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.UUID;
 
 @Service
@@ -37,6 +38,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final RedisTemplate<String, String> redisTemplate;
     private final AccountRepository accountRepository;
     private final PasswordEncoder passwordEncoder;
+    private final ProfileService profileService;
     @NonFinal
     protected final String GRANT_TYPE = "authorization_code";
     private final OutboundIdentityClient outboundIdentityClient;
@@ -63,10 +65,10 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         String email = request.getEmail();
         String password = request.getPassword();
         Account authUser;
-        if(email.contains("@")) {
+        if (email.contains("@")) {
             authUser = accountRepository.findByEmail(email).orElseThrow(
                     () -> new AppException(ErrorCode.USER_NOT_EXISTED));
-        }else{
+        } else {
             authUser = accountRepository.findByUsername(email).orElseThrow(
                     () -> new AppException(ErrorCode.USER_NOT_EXISTED));
         }
@@ -164,24 +166,27 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         // Onboard user
         var user = accountRepository.findByEmail(userInfo.getEmail()).orElseGet(
                 () -> {
-                    Profile profileRequest = ProfileCreationRequest.builder()
-                            .userId(userInfo.getEmail())
-                            .fullName(userInfo.getGivenName() + userInfo.getFamilyName())
-                            .image(userInfo.getPicture())
-                            .build();
-                    // call profile service to add profile
-                    profileClient.createProfile(profileRequest);
-                    return userRepository.save(User.builder()
+                    Profile profile = Profile.builder()
                             .email(userInfo.getEmail())
-                            .roles(roles)
-                            .status(UserStatus.ACTIVATED)
+                            .name(userInfo.getGivenName() + userInfo.getFamilyName())
+                            .address(userInfo.getLocale())
+                            .build();
+                    String id = profile.getId();
+                    return accountRepository.save(Account.builder()
+                            .id(id)
+                            .username(userInfo.getEmail())
+                            .email(userInfo.getEmail())
+                            .roles(role)
+                            .status(Account.AccountStatus.ACTIVE)
                             .build());
                 });
         // Generate token
         var token = generateToken(user);
 
-        return AuthenticationResponse.builder()
+        return LoginResponse.builder()
                 .token(token)
+                .userRole(role.getRole())
+                .username(user.getUsername())
                 .build();
     }
 }

@@ -5,7 +5,7 @@ services:
 #    ports:
 #      - 8888:8888
 
-  auth-db:
+  s-service-db:
     image: postgres:16.3
     restart: always
     user: postgres

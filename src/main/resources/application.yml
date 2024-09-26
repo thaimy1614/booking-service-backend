@@ -33,6 +33,11 @@ outbound:
     client-secret: ${CLIENT_SECRET}
     redirect-uri: ${REDIRECT_URI}
 
+jwt:
+  signer-key: ${JWT_SIGNING_KEY}
+  expiration-duration: 36000 # in sec
+  refreshable-duration: 36000 # in sec
+
 server:
   port: 8080
 application:

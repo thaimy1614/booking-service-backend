@@ -10,4 +10,6 @@ public interface AuthenticationService {
     boolean introspect(String token);
 
     void logout(String token) throws Exception;
+
+    LoginResponse outboundAuthenticate(String code);
 }

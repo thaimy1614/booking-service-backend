@@ -5,13 +5,19 @@ import com.nimbusds.jose.crypto.MACSigner;
 import com.nimbusds.jose.crypto.MACVerifier;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
+import com.s_service.s_service.dto.request.ExchangeTokenRequest;
 import com.s_service.s_service.dto.request.LoginRequest;
 import com.s_service.s_service.dto.response.LoginResponse;
 import com.s_service.s_service.exception.AppException;
 import com.s_service.s_service.exception.ErrorCode;
+import com.s_service.s_service.httpclient.OutboundIdentityClient;
+import com.s_service.s_service.httpclient.OutboundUserClient;
 import com.s_service.s_service.model.Account;
+import com.s_service.s_service.model.Role;
 import com.s_service.s_service.repository.AccountRepository;
+import com.s_service.s_service.repository.RoleRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.NonFinal;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -21,6 +27,7 @@ import org.springframework.stereotype.Service;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.UUID;
 
 @Service
@@ -30,7 +37,21 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final RedisTemplate<String, String> redisTemplate;
     private final AccountRepository accountRepository;
     private final PasswordEncoder passwordEncoder;
+    @NonFinal
+    protected final String GRANT_TYPE = "authorization_code";
+    private final OutboundIdentityClient outboundIdentityClient;
+    private final OutboundUserClient outboundUserClient;
+    private final RoleRepository roleRepository;
 
+    @NonFinal
+    @Value("${outbound.identity.client-id}")
+    protected String CLIENT_ID;
+    @NonFinal
+    @Value("${outbound.identity.client-secret}")
+    protected String CLIENT_SECRET;
+    @NonFinal
+    @Value("${outbound.identity.redirect-uri}")
+    protected String REDIRECT_URI;
     @Value("${jwt.signer-key}")
     private String KEY;
     @Value("${jwt.expiration-duration}")
@@ -121,5 +142,46 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         Date expiryTime = signedJWT.getJWTClaimsSet().getExpirationTime();
 
         addTokenToBlacklist(jId, expiryTime);
+    }
+
+    public LoginResponse outboundAuthenticate(String code) throws JOSEException {
+        var response = outboundIdentityClient.exchangeToken(ExchangeTokenRequest.builder()
+                .code(code)
+                .clientId(CLIENT_ID)
+                .clientSecret(CLIENT_SECRET)
+                .redirectUri(REDIRECT_URI)
+                .grantType(GRANT_TYPE)
+                .build());
+        log.info("TOKEN RESPONSE {}", response);
+
+        // Get user info
+        var userInfo = outboundUserClient.getUserInfo("json", response.getAccessToken());
+
+        log.info("User Info {}", userInfo);
+
+        Role role = roleRepository.findByRole(Role.UserRole.CUSTOMER);
+
+        // Onboard user
+        var user = accountRepository.findByEmail(userInfo.getEmail()).orElseGet(
+                () -> {
+                    Profile profileRequest = ProfileCreationRequest.builder()
+                            .userId(userInfo.getEmail())
+                            .fullName(userInfo.getGivenName() + userInfo.getFamilyName())
+                            .image(userInfo.getPicture())
+                            .build();
+                    // call profile service to add profile
+                    profileClient.createProfile(profileRequest);
+                    return userRepository.save(User.builder()
+                            .email(userInfo.getEmail())
+                            .roles(roles)
+                            .status(UserStatus.ACTIVATED)
+                            .build());
+                });
+        // Generate token
+        var token = generateToken(user);
+
+        return AuthenticationResponse.builder()
+                .token(token)
+                .build();
     }
 }

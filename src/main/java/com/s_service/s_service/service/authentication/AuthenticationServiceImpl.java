@@ -222,7 +222,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 log.error(e.getMessage());
                 throw new AppException(ErrorCode.UNCATEGORIZED_EXCEPTION);
             }
-            emailService.sendVerification(profile.getName(), profile.getEmail(), "http://localhost:8080/identity/verify?email=" + profile.getEmail() + "&code=" + UUID);
+            emailService.sendVerification(profile.getName(), profile.getEmail(), "http://localhost:8080/api/identity/verify?email=" + profile.getEmail() + "&code=" + UUID);
         }
         return SignupResponse.builder().success(true).build();
     }
@@ -273,7 +273,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
-    public void verifyAccount(String token, String email) {
+    public void verifyAccount(String email, String token) {
         Account account = accountRepository.findByEmail(email).orElseThrow();
         if (account.getStatus() != Account.AccountStatus.INACTIVE) {
             throw new AppException(ErrorCode.UNCATEGORIZED_EXCEPTION);

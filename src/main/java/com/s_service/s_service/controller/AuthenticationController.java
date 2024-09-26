@@ -92,10 +92,10 @@ public class AuthenticationController {
     }
 
     @GetMapping("/verify")
-    void verifyAccount(
+    public void verifyAccount(
             HttpServletResponse response,
             @RequestParam("email") String email,
-            @RequestParam("token") String token
+            @RequestParam("code") String token
     ) throws IOException {
         accountService.verifyAccount(email, token);
         response.sendRedirect("http://localhost:3000/login");

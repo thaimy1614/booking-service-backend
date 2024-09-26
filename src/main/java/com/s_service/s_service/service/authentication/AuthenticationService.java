@@ -25,5 +25,5 @@ public interface AuthenticationService {
 
     void checkOTP(String otp, String email);
 
-    void verifyAccount(String token, String email);
+    void verifyAccount(String email, String token);
 }

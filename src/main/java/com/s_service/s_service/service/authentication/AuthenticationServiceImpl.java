@@ -5,10 +5,7 @@ import com.nimbusds.jose.crypto.MACSigner;
 import com.nimbusds.jose.crypto.MACVerifier;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
-import com.s_service.s_service.dto.request.ChangePasswordRequest;
-import com.s_service.s_service.dto.request.ExchangeTokenRequest;
-import com.s_service.s_service.dto.request.LoginRequest;
-import com.s_service.s_service.dto.request.SignupRequest;
+import com.s_service.s_service.dto.request.*;
 import com.s_service.s_service.dto.response.LoginResponse;
 import com.s_service.s_service.dto.response.SignupResponse;
 import com.s_service.s_service.exception.AppException;
@@ -36,7 +33,9 @@ import org.springframework.stereotype.Service;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
+import java.util.Random;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 @Service
 @RequiredArgsConstructor
@@ -240,5 +239,24 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         } else {
             throw new AppException(ErrorCode.UNCATEGORIZED_EXCEPTION);
         }
+    }
+
+    @Override
+    public void sendOTPForForgetPassword(SendOTPRequest request) {
+        String email = request.getEmail();
+        accountRepository.findByEmail(email).orElseThrow(
+                () -> new AppException(ErrorCode.USER_NOT_EXISTED)
+        );
+        // Generate OTP and store in redis
+        String OTP = generate();
+        // Store OTP in redis
+        redisTemplate.opsForValue().set(email, OTP, 5, TimeUnit.MINUTES);
+        // Send OTP via mail - mail-service
+        emailService.sendOtp("OTP - FORGET PASSWORD", email, OTP);
+    }
+
+    private String generate() {
+        int OTP = new Random().nextInt(900000) + 100000;
+        return String.valueOf(OTP);
     }
 }

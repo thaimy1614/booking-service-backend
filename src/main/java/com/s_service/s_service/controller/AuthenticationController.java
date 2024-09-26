@@ -3,10 +3,7 @@ package com.s_service.s_service.controller;
 
 import com.nimbusds.jose.JOSEException;
 import com.s_service.s_service.dto.ApiResponse;
-import com.s_service.s_service.dto.request.ChangePasswordRequest;
-import com.s_service.s_service.dto.request.LoginRequest;
-import com.s_service.s_service.dto.request.LogoutRequest;
-import com.s_service.s_service.dto.request.SignupRequest;
+import com.s_service.s_service.dto.request.*;
 import com.s_service.s_service.dto.response.LoginResponse;
 import com.s_service.s_service.dto.response.SignupResponse;
 import com.s_service.s_service.repository.RoleRepository;
@@ -26,10 +23,6 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 public class AuthenticationController {
     private final AuthenticationService accountService;
-    private final ProfileService profileService;
-    private final RoleRepository roleRepository;
-    private final PasswordEncoder passwordEncoder;
-    private final RedisTemplate<String, String> redisTemplate;
 
     @PostMapping("/outbound/authentication")
     ApiResponse<LoginResponse> outboundAuthenticate(
@@ -78,8 +71,8 @@ public class AuthenticationController {
     }
 
     @PostMapping("/forget-password/send-otp")
-    ResponseEntity<ResponseObject> sendOtp(@RequestBody SendOTPRequest request) {
-        SendOTPResponse response = authService.sendOTPForForgetPassword(request);
+    ApiResponse<Object> sendOtp(@RequestBody SendOTPRequest request) {
+        accountService.sendOTPForForgetPassword(request);
         return ResponseEntity.ok().body(new ResponseObject("OK", "Send OTP successful!", response));
     }
 

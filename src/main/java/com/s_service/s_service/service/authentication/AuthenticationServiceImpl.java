@@ -40,15 +40,19 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     public LoginResponse authenticate(LoginRequest request) throws JOSEException {
         String email = request.getEmail();
-        String username = request.getUsername();
         String password = request.getPassword();
-        log.info("{} - {} - {}", request.getEmail(), request.getUsername(), request.getPassword());
-        username = (email == null) ? username : email;
-        Account authUser = accountRepository.findByEmail(username).orElseThrow(
-                () -> new AppException(ErrorCode.USER_NOT_EXISTED));
+        Account authUser;
+        if(email.contains("@")) {
+            authUser = accountRepository.findByEmail(email).orElseThrow(
+                    () -> new AppException(ErrorCode.USER_NOT_EXISTED));
+        }else{
+            authUser = accountRepository.findByUsername(email).orElseThrow(
+                    () -> new AppException(ErrorCode.USER_NOT_EXISTED));
+        }
+
         boolean check = passwordEncoder.matches(password, authUser.getPassword());
         if (!check) {
-            return null;
+            throw new AppException(ErrorCode.USERNAME_OR_PASSWORD_INCORRECT);
         }
         var token = generateToken(authUser);
         return LoginResponse.builder()

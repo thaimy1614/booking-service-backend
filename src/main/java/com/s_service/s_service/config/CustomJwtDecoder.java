@@ -1,6 +1,5 @@
 package com.s_service.s_service.config;
 
-import com.nimbusds.jose.JOSEException;
 import com.s_service.s_service.service.authentication.AuthenticationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,7 +11,6 @@ import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.spec.SecretKeySpec;
-import java.text.ParseException;
 import java.util.Objects;
 
 @Component
@@ -30,8 +28,6 @@ public class CustomJwtDecoder implements JwtDecoder {
             if (!response) {
                 throw new JwtException("Token invalid");
             }
-        } catch (JOSEException | ParseException e) {
-            throw new JwtException(e.getMessage());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

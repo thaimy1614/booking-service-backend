@@ -3,7 +3,9 @@ package com.s_service.s_service.controller;
 
 import com.nimbusds.jose.JOSEException;
 import com.s_service.s_service.dto.ApiResponse;
+import com.s_service.s_service.dto.request.SignupRequest;
 import com.s_service.s_service.dto.response.LoginResponse;
+import com.s_service.s_service.dto.response.SignupResponse;
 import com.s_service.s_service.repository.RoleRepository;
 import com.s_service.s_service.service.authentication.AuthenticationService;
 import com.s_service.s_service.service.profile.ProfileService;
@@ -24,8 +26,8 @@ import java.util.UUID;
 @RequestMapping("${application.api.prefix}")
 @Slf4j
 public class AuthenticationController {
-    private final AuthenticationService authService;
-    private final ProfileService userService;
+    private final AuthenticationService accountService;
+    private final ProfileService profileService;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
     private final RedisTemplate<String, String> redisTemplate;
@@ -34,41 +36,14 @@ public class AuthenticationController {
     ApiResponse<LoginResponse> outboundAuthenticate(
             @RequestParam("code") String code
     ) throws JOSEException {
-        var result = authService.outboundAuthenticate(code);
+        var result = accountService.outboundAuthenticate(code);
         return ApiResponse.<LoginResponse>builder().message("Login with google successfully!").result(result).build();
     }
 
     //Insert new User with POST method
     @PostMapping("/signup")
-    ApiResponse<SignupResponse> insertUser(@RequestBody UserRequest newUser) {
-//        log.info("Create user");
-        Optional<User> foundUser = userService.findUserByName(newUser.getEmail());
-        if (foundUser.isPresent()) {
-            return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED)
-                    .body(new ResponseObject("FAIL", "User name already taken", null));
-        } else {
-            User user = User.builder()
-                    .email(newUser.getEmail())
-                    .password(passwordEncoder.encode(newUser.getPassword()))
-                    .status(UserStatus.UNVERIFIED)
-                    .roles(Set.of(roleRepository.findById("USER").orElseThrow()))
-                    .build();
-            user = userService.saveUser(user);
-            if (user.getStatus() == UserStatus.UNVERIFIED) {
-                String UUID = java.util.UUID.randomUUID().toString();
-                redisTemplate.opsForValue().set(user.getEmail() + "_verify", UUID);
-                kafkaTemplate.send("verification",
-                        VerifyAccount.builder()
-                                .fullName(newUser.getFullName())
-                                .email(user.getEmail())
-                                .url("http://localhost:8080/api/identity/verify?email=" + user.getEmail() + "&token=" + UUID)
-                                .build());
-            }
-            var profileRequest = mapper.toProfileCreationRequest(newUser);
-            profileRequest.setUserId(user.getId());
-            profileRequest.setIsAdmin(false);
-            log.info(profileRequest.getUserId());
-            boolean profileResponse = profileClient.createProfile(profileRequest);
+    ApiResponse<SignupResponse> signup(@RequestBody SignupRequest request) {
+        SignupResponse response = accountService.signup(request);
 
             return profileResponse ? ResponseEntity.status(HttpStatus.OK)
                     .body(new ResponseObject("OK", "Insert User successful!", user))

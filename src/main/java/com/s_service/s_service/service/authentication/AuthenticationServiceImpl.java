@@ -7,11 +7,15 @@ import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
 import com.s_service.s_service.dto.request.ExchangeTokenRequest;
 import com.s_service.s_service.dto.request.LoginRequest;
+import com.s_service.s_service.dto.request.SignupRequest;
 import com.s_service.s_service.dto.response.LoginResponse;
+import com.s_service.s_service.dto.response.SignupResponse;
 import com.s_service.s_service.exception.AppException;
 import com.s_service.s_service.exception.ErrorCode;
 import com.s_service.s_service.httpclient.OutboundIdentityClient;
 import com.s_service.s_service.httpclient.OutboundUserClient;
+import com.s_service.s_service.mapper.AccountMapper;
+import com.s_service.s_service.mapper.ProfileMapper;
 import com.s_service.s_service.model.Account;
 import com.s_service.s_service.model.Profile;
 import com.s_service.s_service.model.Role;
@@ -39,6 +43,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final AccountRepository accountRepository;
     private final PasswordEncoder passwordEncoder;
     private final ProfileService profileService;
+    private final ProfileMapper profileMapper;
+    private final AccountMapper accountMapper;
+
     @NonFinal
     protected final String GRANT_TYPE = "authorization_code";
     private final OutboundIdentityClient outboundIdentityClient;
@@ -188,5 +195,32 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 .userRole(role.getRole())
                 .username(user.getUsername())
                 .build();
+    }
+
+    @Override
+    public SignupResponse signup(SignupRequest request) {
+        accountRepository.findByEmail(request.getEmail()).orElseThrow(
+                () -> new AppException(ErrorCode.USER_EXISTED));
+        accountRepository.findByUsername(request.getUsername()).orElseThrow(
+                () -> new AppException(ErrorCode.USER_EXISTED));
+        Profile profile = profileService.saveProfile(profileMapper.toProfile(request));
+
+        Account account = accountMapper.toAccount(request);
+        account.setPassword(passwordEncoder.encode(request.getPassword()));
+        account.setRoles(roleRepository.findByRole(Role.UserRole.CUSTOMER));
+        account.setStatus(Account.AccountStatus.INACTIVE);
+        account.setId(profile.getId());
+        account = accountRepository.save(account);
+        if (account.getStatus() == Account.AccountStatus.INACTIVE) {
+            String UUID = java.util.UUID.randomUUID().toString();
+            try {
+                redisTemplate.opsForValue().set("verify:" + account.getEmail(), UUID);
+            } catch (Exception e) {
+                log.error(e.getMessage());
+                throw new AppException(ErrorCode.UNCATEGORIZED_EXCEPTION);
+            }
+            //Send email to verify account
+        }
+        return SignupResponse.builder().success(true).build();
     }
 }

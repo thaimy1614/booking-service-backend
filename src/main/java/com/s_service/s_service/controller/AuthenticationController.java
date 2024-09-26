@@ -3,6 +3,7 @@ package com.s_service.s_service.controller;
 
 import com.nimbusds.jose.JOSEException;
 import com.s_service.s_service.dto.ApiResponse;
+import com.s_service.s_service.dto.request.LoginRequest;
 import com.s_service.s_service.dto.request.SignupRequest;
 import com.s_service.s_service.dto.response.LoginResponse;
 import com.s_service.s_service.dto.response.SignupResponse;
@@ -49,18 +50,12 @@ public class AuthenticationController {
 
 
     @PostMapping("/auth")
-    ResponseEntity<ResponseObject> authenticate(@RequestBody User user) throws Exception {
-        var auth = authService.authenticate(user);
-        return auth != null ? (ResponseEntity.status(HttpStatus.OK).body(auth)) :
-                (ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseObject(
-                        "FAILED", "Username or password not correct!", null)))
-                ;
-    }
-
-    @PostMapping("/introspect")
-    ResponseEntity<IntrospectResponse> introspect(@RequestBody IntrospectRequest introspectRequest) throws Exception {
-        IntrospectResponse introspect = authService.introspect(introspectRequest.getToken());
-        return ResponseEntity.status(HttpStatus.OK).body(new IntrospectResponse(introspect.isValid()));
+    ApiResponse<LoginResponse> authenticate(@RequestBody LoginRequest request) throws Exception {
+        var auth = accountService.authenticate(request);
+        return ApiResponse.<LoginResponse>builder()
+                .message("Login successfully!")
+                .result(auth)
+                .build();
     }
 
     @GetMapping("/log-out")

@@ -22,7 +22,7 @@ import java.io.IOException;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("${application.api.prefix}")
+@RequestMapping("${application.api.prefix}/identity")
 @Slf4j
 public class AuthenticationController {
     private final AuthenticationService accountService;

@@ -9,12 +9,15 @@ import com.s_service.s_service.dto.response.SignupResponse;
 import com.s_service.s_service.repository.RoleRepository;
 import com.s_service.s_service.service.authentication.AuthenticationService;
 import com.s_service.s_service.service.profile.ProfileService;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+
+import java.io.IOException;
 
 
 @RestController
@@ -89,11 +92,12 @@ public class AuthenticationController {
     }
 
     @GetMapping("/verify")
-    ResponseEntity<ResponseObject> refreshToken(
+    void verifyAccount(
+            HttpServletResponse response,
             @RequestParam("email") String email,
             @RequestParam("token") String token
-    ) throws Exception {
-        VerifyAccountResponse response = authService.verifyAccount(email, token);
-        return ResponseEntity.ok().body(new ResponseObject("OK", "Verify account successful!", response));
+    ) throws IOException {
+        accountService.verifyAccount(email, token);
+        response.sendRedirect("http://localhost:3000/login");
     }
 }

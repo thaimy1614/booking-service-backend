@@ -24,4 +24,6 @@ public interface AuthenticationService {
     void sendOTPForForgetPassword(SendOTPRequest request);
 
     void checkOTP(String otp, String email);
+
+    void verifyAccount(String token, String email);
 }

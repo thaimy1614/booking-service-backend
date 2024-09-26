@@ -272,6 +272,21 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         }
     }
 
+    @Override
+    public void verifyAccount(String token, String email) {
+        Account account = accountRepository.findByEmail(email).orElseThrow();
+        if (account.getStatus() != Account.AccountStatus.INACTIVE) {
+            throw new AppException(ErrorCode.UNCATEGORIZED_EXCEPTION);
+        }
+        if (token.equals(redisTemplate.opsForValue().get("verify:"+email))) {
+            redisTemplate.delete("verify:"+email);
+            account.setStatus(Account.AccountStatus.ACTIVE);
+            accountRepository.save(account);
+        }else{
+            throw new AppException(ErrorCode.INCORRECT_VERIFY_CODE);
+        }
+    }
+
     private String generate() {
         int OTP = new Random().nextInt(900000) + 100000;
         return String.valueOf(OTP);

@@ -21,6 +21,7 @@ import com.s_service.s_service.model.Profile;
 import com.s_service.s_service.model.Role;
 import com.s_service.s_service.repository.AccountRepository;
 import com.s_service.s_service.repository.RoleRepository;
+import com.s_service.s_service.service.notification.mail.EmailService;
 import com.s_service.s_service.service.profile.ProfileService;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.NonFinal;
@@ -45,6 +46,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final ProfileService profileService;
     private final ProfileMapper profileMapper;
     private final AccountMapper accountMapper;
+    private final EmailService emailService;
 
     @NonFinal
     protected final String GRANT_TYPE = "authorization_code";
@@ -219,7 +221,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 log.error(e.getMessage());
                 throw new AppException(ErrorCode.UNCATEGORIZED_EXCEPTION);
             }
-            //Send email to verify account
+            emailService.sendVerification(profile.getName(), profile.getEmail(), "http://localhost:8080/identity/verify?email=" + profile.getEmail() + "&code=" + UUID);
         }
         return SignupResponse.builder().success(true).build();
     }

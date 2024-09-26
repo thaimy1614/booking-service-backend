@@ -73,13 +73,19 @@ public class AuthenticationController {
     @PostMapping("/forget-password/send-otp")
     ApiResponse<Object> sendOtp(@RequestBody SendOTPRequest request) {
         accountService.sendOTPForForgetPassword(request);
-        return ResponseEntity.ok().body(new ResponseObject("OK", "Send OTP successful!", response));
+        return ApiResponse.builder()
+                .message("OTP sent successfully!")
+                .result(true)
+                .build();
     }
 
     @PostMapping("/forget-password/check-otp")
-    ResponseEntity<ResponseObject> checkOtp(@RequestBody CheckOTPRequest request) {
-        CheckOTPResponse response = authService.checkOTP(request.getOtp(), request.getEmail());
-        return ResponseEntity.ok().body(new ResponseObject("OK", "Check OTP successful!", response));
+    ApiResponse<Object> checkOtp(@RequestBody CheckOTPRequest request) {
+        accountService.checkOTP(request.getOtp(), request.getEmail());
+        return ApiResponse.builder()
+                .message("OTP check successfully!")
+                .result(true)
+                .build();
     }
 
     @GetMapping("/verify")

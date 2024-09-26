@@ -255,6 +255,23 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         emailService.sendOtp("OTP - FORGET PASSWORD", email, OTP);
     }
 
+    @Override
+    public void checkOTP(String otp, String email) {
+        if (otp.equals(redisTemplate.opsForValue().get(email))) {
+            // delete old OTP
+            redisTemplate.delete(email);
+            String newPassword = generate();
+            var user = accountRepository.findByEmail(email).orElseThrow(
+                    ()->new AppException(ErrorCode.USER_NOT_EXISTED));
+            user.setPassword(passwordEncoder.encode(newPassword));
+            accountRepository.save(user);
+            // send new password
+            emailService.sendNewPassword("S SERVICE - YOUR NEW PASSWORD IS READY", email, newPassword);
+        } else {
+            throw new AppException(ErrorCode.INCORRECT_OTP);
+        }
+    }
+
     private String generate() {
         int OTP = new Random().nextInt(900000) + 100000;
         return String.valueOf(OTP);

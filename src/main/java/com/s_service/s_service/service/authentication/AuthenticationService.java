@@ -22,4 +22,6 @@ public interface AuthenticationService {
     void changePassword(ChangePasswordRequest request);
 
     void sendOTPForForgetPassword(SendOTPRequest request);
+
+    void checkOTP(String otp, String email);
 }

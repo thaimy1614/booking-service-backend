@@ -4,6 +4,7 @@ package com.s_service.s_service.controller;
 import com.nimbusds.jose.JOSEException;
 import com.s_service.s_service.dto.ApiResponse;
 import com.s_service.s_service.dto.request.LoginRequest;
+import com.s_service.s_service.dto.request.LogoutRequest;
 import com.s_service.s_service.dto.request.SignupRequest;
 import com.s_service.s_service.dto.response.LoginResponse;
 import com.s_service.s_service.dto.response.SignupResponse;
@@ -59,10 +60,9 @@ public class AuthenticationController {
     }
 
     @GetMapping("/log-out")
-    ResponseEntity<ResponseObject> logout(@RequestBody InvalidatedTokenRequest invalidatedTokenRequest) throws Exception {
-        authService.logout(invalidatedTokenRequest.getToken());
-        return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("OK", "Logout successful!", invalidatedTokenRequest
-                .getToken()));
+    ApiResponse<Object> logout(@RequestBody LogoutRequest request) throws Exception {
+        accountService.logout(request.getToken());
+        return ApiResponse.builder().message("Logout successfully!").result(true).build();
     }
 
     @GetMapping("/refresh")

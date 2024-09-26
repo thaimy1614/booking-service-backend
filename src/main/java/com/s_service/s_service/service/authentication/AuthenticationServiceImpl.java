@@ -90,7 +90,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         var token = generateToken(authUser);
         return LoginResponse.builder()
                 .token(token)
-                .userRole(authUser.getRoles().getRole())
+                .role(authUser.getRoles().getRole())
                 .build();
     }
 
@@ -195,17 +195,17 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
         return LoginResponse.builder()
                 .token(token)
-                .userRole(role.getRole())
+                .role(role.getRole())
                 .username(user.getUsername())
                 .build();
     }
 
     @Override
     public SignupResponse signup(SignupRequest request) {
-        accountRepository.findByEmail(request.getEmail()).orElseThrow(
-                () -> new AppException(ErrorCode.USER_EXISTED));
-        accountRepository.findByUsername(request.getUsername()).orElseThrow(
-                () -> new AppException(ErrorCode.USER_EXISTED));
+        accountRepository.findByEmail(request.getEmail())
+                        .ifPresent(ex->{throw new AppException(ErrorCode.USER_EXISTED);});
+        accountRepository.findByUsername(request.getUsername())
+                        .ifPresent(ex->{throw new AppException(ErrorCode.USER_EXISTED);});
         Profile profile = profileService.saveProfile(profileMapper.toProfile(request));
 
         Account account = accountMapper.toAccount(request);

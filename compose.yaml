@@ -20,7 +20,19 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+
+  #Redis#
+  s-service-redis:
+    image: docker.io/redis:7.2.3
+    container_name: s-service-redis
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - s-redis-data:/data
+
 volumes:
   s-service-data:
+  s-redis-data:
 
 

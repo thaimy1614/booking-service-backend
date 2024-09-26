@@ -14,6 +14,18 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: update
+  mail:
+    default-encoding: UTF-8
+    host: ${SPRING_MAIL_HOST:smtp.gmail.com}
+    username: ${SPRING_MAIL_USERNAME}
+    password: ${SPRING_MAIL_PASSWORD}
+    port: ${SPRING_MAIL_PORT:587}
+    protocol: ${SPRING_MAIL_PROTOCOL:smtp}
+    test-connection: ${SPRING_MAIL_TEST_CONNECTION:false}
+    properties:
+      mail.smtp.ssl.trust: ${SPRING_MAIL_PROPERTIES_MAIL_SMTP_SSL_TRUST:*}
+      mail.smtp.auth: ${SPRING_MAIL_PROPERTIES_MAIL_SMTP_AUTH:true}
+      mail.smtp.starttls.enable: ${SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE:true}
 
 outbound:
   identity:

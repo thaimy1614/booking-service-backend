@@ -171,11 +171,11 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
         log.info("User Info {}", userInfo);
 
-        Role role = roleRepository.findByRole(Role.UserRole.CUSTOMER);
-
         // Onboard user
         var user = accountRepository.findByEmail(userInfo.getEmail()).orElseGet(
                 () -> {
+                    Role role = roleRepository.findByRole(Role.UserRole.CUSTOMER);
+
                     Account account = accountRepository.save(Account.builder()
                             .username(userInfo.getEmail())
                             .email(userInfo.getEmail())
@@ -200,7 +200,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
         return LoginResponse.builder()
                 .token(token)
-                .role(role.getRole())
+                .role(user.getRoles().getRole())
                 .username(user.getUsername())
                 .build();
     }

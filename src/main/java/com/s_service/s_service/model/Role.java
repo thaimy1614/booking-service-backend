@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @Builder
 @AllArgsConstructor
@@ -19,6 +21,9 @@ public class Role {
     @Enumerated(EnumType.STRING)
     private UserRole role;
     private String description;
+
+    @OneToMany(mappedBy = "roles", cascade = CascadeType.ALL, fetch = FetchType.LAZY) // Change to EAGER if necessary
+    private List<Account> accounts;
 
     public enum UserRole {
         ADMIN, STAFF, CUSTOMER

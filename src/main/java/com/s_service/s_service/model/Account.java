@@ -23,8 +23,8 @@ public class Account {
     private String email;
     private String password;
 
-    @OneToOne
-    @JoinColumn(name = "role_id")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "role_id", nullable = false)
     private Role roles;
 
     @Enumerated(EnumType.STRING)

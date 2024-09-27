@@ -1,5 +1,7 @@
 package com.s_service.s_service.service.profile;
 
+import com.s_service.s_service.dto.response.ProfileResponse;
+import com.s_service.s_service.mapper.ProfileMapper;
 import com.s_service.s_service.model.Profile;
 import com.s_service.s_service.repository.ProfileRepository;
 import lombok.RequiredArgsConstructor;
@@ -9,9 +11,17 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class ProfileServiceImpl implements ProfileService{
     private final ProfileRepository profileRepository;
+    private final ProfileMapper profileMapper;
 
     @Override
     public Profile saveProfile(Profile profile) {
         return profileRepository.save(profile);
+    }
+
+    @Override
+    public ProfileResponse getMyInfo(String userId) {
+        Profile profile = profileRepository.findById(userId).orElseThrow(
+                ()-> new RuntimeException("Profile not found"));
+        return profileMapper.toProfileResponse(profile);
     }
 }

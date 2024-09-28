@@ -54,6 +54,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final OutboundUserClient outboundUserClient;
     private final RoleRepository roleRepository;
 
+    @Value("${application.api.url}")
+    private String apiUrl;
+
     @NonFinal
     @Value("${outbound.identity.client-id}")
     protected String CLIENT_ID;
@@ -232,7 +235,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 log.error(e.getMessage());
                 throw new AppException(ErrorCode.UNCATEGORIZED_EXCEPTION);
             }
-            emailService.sendVerification(profile.getName(), profile.getEmail(), "http://localhost:8080/api/identity/verify?email=" + profile.getEmail() + "&code=" + UUID);
+            emailService.sendVerification(profile.getName(), profile.getEmail(), apiUrl+"/identity/verify?email=" + profile.getEmail() + "&code=" + UUID);
         }
         return SignupResponse.builder().success(true).build();
     }

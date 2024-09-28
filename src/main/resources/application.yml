@@ -43,3 +43,4 @@ server:
 application:
   api:
     prefix: /api
+    url: ${API_URL}

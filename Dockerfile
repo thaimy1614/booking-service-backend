@@ -17,6 +17,9 @@ WORKDIR /build
 COPY --chmod=0755 mvnw mvnw
 COPY .mvn/ .mvn/
 
+RUN sed -i 's/\r$//' mvnw
+RUN sed -i 's/\r$//' .mvn/wrapper/maven-wrapper.properties
+
 # Download dependencies as a separate step to take advantage of Docker's caching.
 # Leverage a cache mount to /root/.m2 so that subsequent builds don't have to
 # re-download packages.

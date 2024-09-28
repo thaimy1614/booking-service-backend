@@ -1,9 +1,10 @@
 services:
-#  server:
-#    build:
-#      context: .
-#    ports:
-#      - 8888:8888
+  s-service:
+    build:
+      context: .
+    image: thaimy1614/s-service:latest
+    ports:
+      - 8080:8080
 
   s-service-db:
     image: postgres:16.3

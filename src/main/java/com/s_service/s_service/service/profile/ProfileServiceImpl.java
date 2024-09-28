@@ -6,6 +6,8 @@ import com.s_service.s_service.mapper.ProfileMapper;
 import com.s_service.s_service.model.Profile;
 import com.s_service.s_service.repository.ProfileRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -37,4 +39,13 @@ public class ProfileServiceImpl implements ProfileService {
 
         return profileMapper.toProfileResponse(profile);
     }
+
+    @Override
+    public Page<ProfileResponse> getAll(Pageable pageable) {
+        Page<Profile> profiles = profileRepository.findAll(pageable);
+
+        return profiles.map(profileMapper::toProfileResponse);
+    }
+
+
 }

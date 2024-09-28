@@ -7,7 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface ProfileService {
-    public Profile saveProfile(Profile profile);
+    Profile saveProfile(Profile profile);
 
     ProfileResponse getMyInfo(String userId);
 

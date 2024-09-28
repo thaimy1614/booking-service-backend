@@ -6,15 +6,10 @@ import com.s_service.s_service.dto.ApiResponse;
 import com.s_service.s_service.dto.request.*;
 import com.s_service.s_service.dto.response.LoginResponse;
 import com.s_service.s_service.dto.response.SignupResponse;
-import com.s_service.s_service.repository.RoleRepository;
 import com.s_service.s_service.service.authentication.AuthenticationService;
-import com.s_service.s_service.service.profile.ProfileService;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;

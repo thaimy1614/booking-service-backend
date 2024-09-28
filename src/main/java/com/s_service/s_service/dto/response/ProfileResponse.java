@@ -2,7 +2,6 @@ package com.s_service.s_service.dto.response;
 
 import lombok.Builder;
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
 
 @Data
 @Builder

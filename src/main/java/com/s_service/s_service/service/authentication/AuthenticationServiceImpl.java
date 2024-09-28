@@ -41,6 +41,8 @@ import java.util.concurrent.TimeUnit;
 @RequiredArgsConstructor
 @Slf4j
 public class AuthenticationServiceImpl implements AuthenticationService {
+    @NonFinal
+    protected final String GRANT_TYPE = "authorization_code";
     private final RedisTemplate<String, String> redisTemplate;
     private final AccountRepository accountRepository;
     private final PasswordEncoder passwordEncoder;
@@ -48,9 +50,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final ProfileMapper profileMapper;
     private final AccountMapper accountMapper;
     private final EmailService emailService;
-
-    @NonFinal
-    protected final String GRANT_TYPE = "authorization_code";
     private final OutboundIdentityClient outboundIdentityClient;
     private final OutboundUserClient outboundUserClient;
     private final RoleRepository roleRepository;
@@ -208,9 +207,13 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Override
     public SignupResponse signup(SignupRequest request) {
         accountRepository.findByEmail(request.getEmail())
-                        .ifPresent(ex->{throw new AppException(ErrorCode.USER_EXISTED);});
+                .ifPresent(ex -> {
+                    throw new AppException(ErrorCode.USER_EXISTED);
+                });
         accountRepository.findByUsername(request.getUsername())
-                        .ifPresent(ex->{throw new AppException(ErrorCode.USER_EXISTED);});
+                .ifPresent(ex -> {
+                    throw new AppException(ErrorCode.USER_EXISTED);
+                });
         Account account = accountMapper.toAccount(request);
         account.setPassword(passwordEncoder.encode(request.getPassword()));
         account.setRoles(roleRepository.findByRole(Role.UserRole.CUSTOMER));
@@ -269,7 +272,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             redisTemplate.delete(email);
             String newPassword = generate();
             var user = accountRepository.findByEmail(email).orElseThrow(
-                    ()->new AppException(ErrorCode.USER_NOT_EXISTED));
+                    () -> new AppException(ErrorCode.USER_NOT_EXISTED));
             user.setPassword(passwordEncoder.encode(newPassword));
             accountRepository.save(user);
             // send new password
@@ -285,11 +288,11 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         if (account.getStatus() != Account.AccountStatus.INACTIVE) {
             throw new AppException(ErrorCode.UNCATEGORIZED_EXCEPTION);
         }
-        if (token.equals(redisTemplate.opsForValue().get("verify:"+email))) {
-            redisTemplate.delete("verify:"+email);
+        if (token.equals(redisTemplate.opsForValue().get("verify:" + email))) {
+            redisTemplate.delete("verify:" + email);
             account.setStatus(Account.AccountStatus.ACTIVE);
             accountRepository.save(account);
-        }else{
+        } else {
             throw new AppException(ErrorCode.INCORRECT_VERIFY_CODE);
         }
     }

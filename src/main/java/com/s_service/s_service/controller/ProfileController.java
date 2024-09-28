@@ -41,17 +41,4 @@ public class ProfileController {
                 .result(response)
                 .build();
     }
-
-    @GetMapping("/get-all")
-    ApiResponse<Page<ProfileResponse>> getAllProfile(
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size
-    ) {
-        Pageable pageable = PageRequest.of(page, size);
-        Page<ProfileResponse> response = profileService.getAll(pageable);
-        return ApiResponse.<Page<ProfileResponse>>builder()
-                .message("Get all profiles page:" + page + ", size:" + size + " successfully!")
-                .result(response)
-                .build();
-    }
 }

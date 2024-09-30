@@ -10,4 +10,6 @@ public interface CategoryService {
     GetCategoryResponse addCategory(CategoryCreationRequest request);
 
     List<CategoryResponse> getAllCategoriesWithServices();
+
+    List<GetCategoryResponse> getAllCategories();
 }

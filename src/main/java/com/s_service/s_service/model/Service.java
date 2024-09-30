@@ -19,6 +19,7 @@ public class Service {
 
     private String name;
 
+    @Column(length = 500)
     private String description;
 
     private int price;

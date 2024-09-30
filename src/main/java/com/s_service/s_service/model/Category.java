@@ -22,8 +22,4 @@ public class Category {
     private String name;
 
     private String description;
-
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JsonManagedReference
-    private List<Service> services;
 }

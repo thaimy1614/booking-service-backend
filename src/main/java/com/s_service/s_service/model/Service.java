@@ -25,8 +25,7 @@ public class Service {
 
     private int handleTime;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "category_id")
-    @JsonBackReference
     private Category category;
 }

@@ -19,7 +19,9 @@ public enum ErrorCode {
     INCORRECT_OTP(1010, "OTP is incorrect", HttpStatus.BAD_REQUEST),
     INCORRECT_VERIFY_CODE(1011, "Cannot verify account", HttpStatus.BAD_REQUEST),
     SERVICE_NOT_FOUND(1012, "Service not found", HttpStatus.NOT_FOUND),
-    CATEGORY_NOT_FOUND(1013, "Service not found", HttpStatus.NOT_FOUND),
+    CATEGORY_NOT_FOUND(1013, "Category not found", HttpStatus.NOT_FOUND),
+    CATEGORY_EXISTED(1014, "Category existed", HttpStatus.NOT_FOUND),
+    SERVICE_EXISTED(1015, "Service existed", HttpStatus.NOT_FOUND),
     ;
 
     private final int code;

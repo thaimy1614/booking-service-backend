@@ -3,6 +3,8 @@ package com.s_service.s_service.service.category;
 import com.s_service.s_service.dto.request.category.CategoryCreationRequest;
 import com.s_service.s_service.dto.response.category.CategoryResponse;
 import com.s_service.s_service.dto.response.category.GetCategoryResponse;
+import com.s_service.s_service.exception.AppException;
+import com.s_service.s_service.exception.ErrorCode;
 import com.s_service.s_service.mapper.CategoryMapper;
 import com.s_service.s_service.model.Category;
 import com.s_service.s_service.repository.CategoryRepository;
@@ -40,6 +42,8 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public GetCategoryResponse updateCategory(int id, CategoryCreationRequest request) {
-        Category category = categoryRepository.findById(id).orElse(null);
+        Category category = categoryRepository.findById(id).orElseThrow(
+                () -> new AppException(ErrorCode.CATEGORY_NOT_FOUND)
+        );
     }
 }

@@ -4,7 +4,6 @@ package com.s_service.s_service.controller;
 import com.s_service.s_service.dto.ApiResponse;
 import com.s_service.s_service.dto.request.category.CategoryCreationRequest;
 import com.s_service.s_service.dto.request.profile.UpdateProfileRequest;
-import com.s_service.s_service.dto.response.category.CategoryResponse;
 import com.s_service.s_service.dto.response.category.GetCategoryResponse;
 import com.s_service.s_service.dto.response.profile.ProfileResponse;
 import com.s_service.s_service.service.category.CategoryService;
@@ -51,8 +50,8 @@ public class AdminController {
     }
 
     @GetMapping("/category")
-    ApiResponse<List<GetCategoryResponse>> getAllCategory(){
-        List<GetCategoryResponse> response =  categoryService.getAllCategories();
+    ApiResponse<List<GetCategoryResponse>> getAllCategory() {
+        List<GetCategoryResponse> response = categoryService.getAllCategories();
         return ApiResponse.<List<GetCategoryResponse>>builder()
                 .message("Get all categories successfully!")
                 .result(response)
@@ -66,6 +65,18 @@ public class AdminController {
         GetCategoryResponse response = categoryService.addCategory(request);
         return ApiResponse.<GetCategoryResponse>builder()
                 .message("Add category successfully!")
+                .result(response)
+                .build();
+    }
+
+    @PutMapping("/category/{id}")
+    ApiResponse<GetCategoryResponse> updateCategory(
+            @PathVariable int id,
+            @RequestBody CategoryCreationRequest request
+    ) {
+        GetCategoryResponse response = categoryService.updateCategory(id, request);
+        return ApiResponse.<GetCategoryResponse>builder()
+                .message("Update category successfully!")
                 .result(response)
                 .build();
     }

@@ -37,4 +37,9 @@ public class CategoryServiceImpl implements CategoryService {
         return categories.stream().map(categoryMapper::toGetCategoryResponse
         ).toList();
     }
+
+    @Override
+    public GetCategoryResponse updateCategory(int id, CategoryCreationRequest request) {
+        Category category = categoryRepository.findById(id).orElse(null);
+    }
 }

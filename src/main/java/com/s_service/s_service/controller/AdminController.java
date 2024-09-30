@@ -4,6 +4,7 @@ package com.s_service.s_service.controller;
 import com.s_service.s_service.dto.ApiResponse;
 import com.s_service.s_service.dto.request.category.CategoryCreationRequest;
 import com.s_service.s_service.dto.request.profile.UpdateProfileRequest;
+import com.s_service.s_service.dto.request.service.ServiceRequest;
 import com.s_service.s_service.dto.response.category.GetCategoryResponse;
 import com.s_service.s_service.dto.response.profile.ProfileResponse;
 import com.s_service.s_service.dto.response.service.ServiceResponse;
@@ -93,6 +94,27 @@ public class AdminController {
         Page<ServiceResponse> response = serviceService.getAll(pageable);
         return ApiResponse.<Page<ServiceResponse>>builder()
                 .message("Get services successfully!")
+                .result(response)
+                .build();
+    }
+
+    @PostMapping("/service")
+    ApiResponse<ServiceResponse> addService(@RequestBody ServiceRequest request){
+        ServiceResponse response = serviceService.addService(request);
+        return ApiResponse.<ServiceResponse>builder()
+                .message("Add service successfully!")
+                .result(response)
+                .build();
+    }
+
+    @PutMapping("/service/{id}")
+    ApiResponse<ServiceResponse> updateService(
+            @PathVariable int id,
+            @RequestBody ServiceRequest request
+    ){
+        ServiceResponse response = serviceService.updateService(id, request);
+        return ApiResponse.<ServiceResponse>builder()
+                .message("Update service successfully!")
                 .result(response)
                 .build();
     }

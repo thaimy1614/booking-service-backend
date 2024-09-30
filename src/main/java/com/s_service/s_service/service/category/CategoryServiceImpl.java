@@ -45,5 +45,12 @@ public class CategoryServiceImpl implements CategoryService {
         Category category = categoryRepository.findById(id).orElseThrow(
                 () -> new AppException(ErrorCode.CATEGORY_NOT_FOUND)
         );
+
+        category.setName(request.getName());
+        category.setDescription(request.getDescription());
+
+        category = categoryRepository.save(category);
+
+        return categoryMapper.toGetCategoryResponse(category);
     }
 }

@@ -21,7 +21,7 @@ public class Service {
 
     private String description;
 
-    private Double price;
+    private int price;
 
     private int handleTime;
 

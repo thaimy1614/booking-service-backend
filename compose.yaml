@@ -3,6 +3,8 @@ services:
     build:
       context: .
     image: thaimy1614/s-service:latest
+    env_file:
+      - ./.env/docker.env
     ports:
       - 8080:8080
 

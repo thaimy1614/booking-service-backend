@@ -24,6 +24,7 @@ public class Category {
     @Column(length = 500)
     private String description;
 
-    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
-    private List<Service> products;
+    @OneToMany(mappedBy = "category", targetEntity = Service.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JsonManagedReference
+    private List<Service> services;
 }

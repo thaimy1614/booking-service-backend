@@ -66,7 +66,7 @@ public class ApplicationConfiguration {
                 accountRepository.save(account);
             }
 
-            if (!categoryRepository.existsById(1)) {
+            if (categoryRepository.findAll().isEmpty()) {
                 categoryRepository.save(
                         Category.builder()
                                 .name("Cloud Computing")
@@ -118,7 +118,7 @@ public class ApplicationConfiguration {
                 );
             }
 
-            if (!serviceRepository.existsById(1)) {
+            if (serviceRepository.findAll().isEmpty()) {
                 serviceRepository.save(
                         Service.builder()
                                 .name("Brand Research")
@@ -301,71 +301,69 @@ public class ApplicationConfiguration {
                                 .build()
                 );
 
-                if (!serviceRepository.existsById(4)) {
-                    serviceRepository.save(
-                            Service.builder()
-                                    .name("Consulting on Building an Information Security Management System")
-                                    .category(categoryRepository.findById(3).orElse(null))  // Adjust category ID as needed
-                                    .description("Consulting on building an Information Security Management System (ISMS) involves " +
-                                            "guiding organizations in establishing, implementing, maintaining, and continuously improving " +
-                                            "a security management system to protect sensitive data and ensure compliance with security standards.")
-                                    .handleTime(5)
-                                    .price(15000000)
-                                    .build()
-                    );
-                    serviceRepository.save(
-                            Service.builder()
-                                    .name("Supporting Security System Administration")
-                                    .category(categoryRepository.findById(4).orElse(null))  // Adjust category ID as needed
-                                    .description("Supporting security system administration involves managing and maintaining an organization's " +
-                                            "security infrastructure, including firewalls, intrusion detection systems, and security monitoring tools. " +
-                                            "This service ensures that security systems operate efficiently and respond to emerging threats.")
-                                    .handleTime(3)
-                                    .price(8000000)
-                                    .build()
-                    );
+                serviceRepository.save(
+                        Service.builder()
+                                .name("Consulting on Building an Information Security Management System")
+                                .category(categoryRepository.findById(3).orElse(null))  // Adjust category ID as needed
+                                .description("Consulting on building an Information Security Management System (ISMS) involves " +
+                                        "guiding organizations in establishing, implementing, maintaining, and continuously improving " +
+                                        "a security management system to protect sensitive data and ensure compliance with security standards.")
+                                .handleTime(5)
+                                .price(15000000)
+                                .build()
+                );
+                serviceRepository.save(
+                        Service.builder()
+                                .name("Supporting Security System Administration")
+                                .category(categoryRepository.findById(4).orElse(null))  // Adjust category ID as needed
+                                .description("Supporting security system administration involves managing and maintaining an organization's " +
+                                        "security infrastructure, including firewalls, intrusion detection systems, and security monitoring tools. " +
+                                        "This service ensures that security systems operate efficiently and respond to emerging threats.")
+                                .handleTime(3)
+                                .price(8000000)
+                                .build()
+                );
 
-                    serviceRepository.save(
-                            Service.builder()
-                                    .name("Database System Technical Support")
-                                    .category(categoryRepository.findById(5).orElse(null))  // Adjust category ID as needed
-                                    .description("Technical support for database systems includes troubleshooting, maintenance, and performance monitoring. " +
-                                            "This service ensures the stability and efficiency of database operations while addressing any technical issues that arise.")
-                                    .handleTime(3)
-                                    .price(6000000)
-                                    .build()
-                    );
-                    serviceRepository.save(
-                            Service.builder()
-                                    .name("Business Continuity & Disaster Recovery")
-                                    .category(categoryRepository.findById(5).orElse(null))  // Adjust category ID as needed
-                                    .description("Business Continuity and Disaster Recovery (BC/DR) services help organizations plan for " +
-                                            "and respond to potential disruptions. This service ensures that critical business functions remain operational during a crisis.")
-                                    .handleTime(7)
-                                    .price(15000000)
-                                    .build()
-                    );
-                    serviceRepository.save(
-                            Service.builder()
-                                    .name("Data System Upgrade and Conversion")
-                                    .category(categoryRepository.findById(5).orElse(null))  // Adjust category ID as needed
-                                    .description("Data system upgrade and conversion services involve migrating databases, upgrading systems, " +
-                                            "and ensuring data integrity during transitions. This service supports businesses in modernizing their data infrastructure.")
-                                    .handleTime(4)
-                                    .price(10000000)
-                                    .build()
-                    );
-                    serviceRepository.save(
-                            Service.builder()
-                                    .name("Proactively Warn of Database Operating Status")
-                                    .category(categoryRepository.findById(5).orElse(null))  // Adjust category ID as needed
-                                    .description("This service proactively monitors the operating status of a database system, providing real-time alerts " +
-                                            "on potential issues such as performance degradation, security risks, and system failures. It helps businesses take preventive measures.")
-                                    .handleTime(2)
-                                    .price(5000000)
-                                    .build()
-                    );
-                }
+                serviceRepository.save(
+                        Service.builder()
+                                .name("Database System Technical Support")
+                                .category(categoryRepository.findById(5).orElse(null))  // Adjust category ID as needed
+                                .description("Technical support for database systems includes troubleshooting, maintenance, and performance monitoring. " +
+                                        "This service ensures the stability and efficiency of database operations while addressing any technical issues that arise.")
+                                .handleTime(3)
+                                .price(6000000)
+                                .build()
+                );
+                serviceRepository.save(
+                        Service.builder()
+                                .name("Business Continuity & Disaster Recovery")
+                                .category(categoryRepository.findById(5).orElse(null))  // Adjust category ID as needed
+                                .description("Business Continuity and Disaster Recovery (BC/DR) services help organizations plan for " +
+                                        "and respond to potential disruptions. This service ensures that critical business functions remain operational during a crisis.")
+                                .handleTime(7)
+                                .price(15000000)
+                                .build()
+                );
+                serviceRepository.save(
+                        Service.builder()
+                                .name("Data System Upgrade and Conversion")
+                                .category(categoryRepository.findById(5).orElse(null))  // Adjust category ID as needed
+                                .description("Data system upgrade and conversion services involve migrating databases, upgrading systems, " +
+                                        "and ensuring data integrity during transitions. This service supports businesses in modernizing their data infrastructure.")
+                                .handleTime(4)
+                                .price(10000000)
+                                .build()
+                );
+                serviceRepository.save(
+                        Service.builder()
+                                .name("Proactively Warn of Database Operating Status")
+                                .category(categoryRepository.findById(5).orElse(null))  // Adjust category ID as needed
+                                .description("This service proactively monitors the operating status of a database system, providing real-time alerts " +
+                                        "on potential issues such as performance degradation, security risks, and system failures. It helps businesses take preventive measures.")
+                                .handleTime(2)
+                                .price(5000000)
+                                .build()
+                );
             }
         };
     }

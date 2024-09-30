@@ -17,7 +17,8 @@ public enum ErrorCode {
     USERNAME_OR_PASSWORD_INCORRECT(1008, "Username or Password is incorrect", HttpStatus.BAD_REQUEST),
     INCORRECT_PASSWORD(1009, "Password is incorrect", HttpStatus.BAD_REQUEST),
     INCORRECT_OTP(1010, "OTP is incorrect", HttpStatus.BAD_REQUEST),
-    INCORRECT_VERIFY_CODE(1010, "Cannot verify account", HttpStatus.BAD_REQUEST),
+    INCORRECT_VERIFY_CODE(1011, "Cannot verify account", HttpStatus.BAD_REQUEST),
+    SERVICE_NOT_FOUND(1012, "Service not found", HttpStatus.NOT_FOUND),
     ;
 
     private final int code;

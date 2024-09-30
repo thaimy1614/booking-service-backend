@@ -6,9 +6,9 @@ import lombok.Data;
 @Data
 @Builder
 public class ServiceResponse {
-    private String serviceName;
+    private String name;
     private String categoryName;
     private int handleTime;
     private String description;
-    private Double price;
+    private int price;
 }

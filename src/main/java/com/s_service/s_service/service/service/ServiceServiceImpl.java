@@ -19,7 +19,11 @@ public class ServiceServiceImpl implements ServiceService {
     @Override
     public Page<ServiceResponse> getAll(Pageable pageable) {
         Page<com.s_service.s_service.model.Service> services = serviceRepository.findAll(pageable);
-        return services.map(serviceMapper::toServiceResponse);
+        return services.map(service -> {
+            ServiceResponse response = serviceMapper.toServiceResponse(service);
+            response.setCategoryName(service.getCategory().getName());
+            return response;
+        });
     }
 
     @Override

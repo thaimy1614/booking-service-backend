@@ -1,7 +1,7 @@
 package com.s_service.s_service.httpclient;
 
-import com.s_service.s_service.dto.request.ExchangeTokenRequest;
-import com.s_service.s_service.dto.response.ExchangeTokenResponse;
+import com.s_service.s_service.dto.request.account.ExchangeTokenRequest;
+import com.s_service.s_service.dto.response.account.ExchangeTokenResponse;
 import feign.QueryMap;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.MediaType;

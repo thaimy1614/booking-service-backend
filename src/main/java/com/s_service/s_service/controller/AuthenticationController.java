@@ -3,9 +3,9 @@ package com.s_service.s_service.controller;
 
 import com.nimbusds.jose.JOSEException;
 import com.s_service.s_service.dto.ApiResponse;
-import com.s_service.s_service.dto.request.*;
-import com.s_service.s_service.dto.response.LoginResponse;
-import com.s_service.s_service.dto.response.SignupResponse;
+import com.s_service.s_service.dto.request.account.*;
+import com.s_service.s_service.dto.response.account.LoginResponse;
+import com.s_service.s_service.dto.response.account.SignupResponse;
 import com.s_service.s_service.service.authentication.AuthenticationService;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;

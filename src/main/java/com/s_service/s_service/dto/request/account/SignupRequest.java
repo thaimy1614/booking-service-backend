@@ -1,4 +1,4 @@
-package com.s_service.s_service.dto.request;
+package com.s_service.s_service.dto.request.account;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

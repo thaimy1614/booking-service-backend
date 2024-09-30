@@ -1,6 +1,6 @@
 package com.s_service.s_service.httpclient;
 
-import com.s_service.s_service.dto.response.OutboundUserResponse;
+import com.s_service.s_service.dto.response.account.OutboundUserResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;

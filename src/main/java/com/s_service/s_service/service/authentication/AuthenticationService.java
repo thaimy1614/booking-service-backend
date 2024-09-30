@@ -1,12 +1,12 @@
 package com.s_service.s_service.service.authentication;
 
 import com.nimbusds.jose.JOSEException;
-import com.s_service.s_service.dto.request.ChangePasswordRequest;
-import com.s_service.s_service.dto.request.LoginRequest;
-import com.s_service.s_service.dto.request.SendOTPRequest;
-import com.s_service.s_service.dto.request.SignupRequest;
-import com.s_service.s_service.dto.response.LoginResponse;
-import com.s_service.s_service.dto.response.SignupResponse;
+import com.s_service.s_service.dto.request.account.ChangePasswordRequest;
+import com.s_service.s_service.dto.request.account.LoginRequest;
+import com.s_service.s_service.dto.request.account.SendOTPRequest;
+import com.s_service.s_service.dto.request.account.SignupRequest;
+import com.s_service.s_service.dto.response.account.LoginResponse;
+import com.s_service.s_service.dto.response.account.SignupResponse;
 
 public interface AuthenticationService {
     LoginResponse authenticate(LoginRequest request) throws JOSEException;

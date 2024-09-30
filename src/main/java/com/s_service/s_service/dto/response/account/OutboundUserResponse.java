@@ -1,4 +1,4 @@
-package com.s_service.s_service.dto.response;
+package com.s_service.s_service.dto.response.account;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;

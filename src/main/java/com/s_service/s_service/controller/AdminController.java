@@ -6,8 +6,10 @@ import com.s_service.s_service.dto.request.category.CategoryCreationRequest;
 import com.s_service.s_service.dto.request.profile.UpdateProfileRequest;
 import com.s_service.s_service.dto.response.category.GetCategoryResponse;
 import com.s_service.s_service.dto.response.profile.ProfileResponse;
+import com.s_service.s_service.dto.response.service.ServiceResponse;
 import com.s_service.s_service.service.category.CategoryService;
 import com.s_service.s_service.service.profile.ProfileService;
+import com.s_service.s_service.service.service.ServiceService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -23,6 +25,7 @@ import java.util.List;
 public class AdminController {
     private final ProfileService profileService;
     private final CategoryService categoryService;
+    private final ServiceService serviceService;
 
     @GetMapping("/user")
     ApiResponse<Page<ProfileResponse>> getAllProfile(
@@ -77,6 +80,19 @@ public class AdminController {
         GetCategoryResponse response = categoryService.updateCategory(id, request);
         return ApiResponse.<GetCategoryResponse>builder()
                 .message("Update category successfully!")
+                .result(response)
+                .build();
+    }
+
+    @GetMapping("/service")
+    ApiResponse<Page<ServiceResponse>> getServices(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size
+    ) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<ServiceResponse> response = serviceService.getAll(pageable);
+        return ApiResponse.<Page<ServiceResponse>>builder()
+                .message("Get services successfully!")
                 .result(response)
                 .build();
     }

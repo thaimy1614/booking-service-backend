@@ -17,19 +17,6 @@ import java.util.List;
 public class ServiceController {
     private final ServiceService serviceService;
 
-    @GetMapping
-    ApiResponse<Page<ServiceResponse>> getServices(
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size
-    ) {
-        Pageable pageable = PageRequest.of(page, size);
-        Page<ServiceResponse> response = serviceService.getAll(pageable);
-        return ApiResponse.<Page<ServiceResponse>>builder()
-                .message("Get services successfully!")
-                .result(response)
-                .build();
-    }
-
     @GetMapping("/{id}")
     ApiResponse<ServiceResponse> getService(@PathVariable int id) {
         ServiceResponse response = serviceService.getServiceById(id);

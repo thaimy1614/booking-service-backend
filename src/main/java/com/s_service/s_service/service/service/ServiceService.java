@@ -6,4 +6,5 @@ import org.springframework.data.domain.Pageable;
 
 public interface ServiceService {
     Page<ServiceResponse> getAll(Pageable pageable);
+    ServiceResponse getServiceById(int id);
 }

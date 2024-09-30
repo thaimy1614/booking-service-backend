@@ -7,10 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -28,6 +25,15 @@ public class ServiceController {
         Pageable pageable = PageRequest.of(page, size);
         Page<ServiceResponse> response = serviceService.getAll(pageable);
         return ApiResponse.<Page<ServiceResponse>>builder()
+                .message("Get services successfully!")
+                .result(response)
+                .build();
+    }
+
+    @GetMapping("/{id}")
+    ApiResponse<ServiceResponse> getService(@PathVariable int id) {
+        ServiceResponse response = serviceService.getServiceById(id);
+        return ApiResponse.<ServiceResponse>builder()
                 .message("Get services successfully!")
                 .result(response)
                 .build();

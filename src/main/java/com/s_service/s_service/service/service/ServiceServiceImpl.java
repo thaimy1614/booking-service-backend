@@ -1,6 +1,8 @@
 package com.s_service.s_service.service.service;
 
 import com.s_service.s_service.dto.response.service.ServiceResponse;
+import com.s_service.s_service.exception.AppException;
+import com.s_service.s_service.exception.ErrorCode;
 import com.s_service.s_service.mapper.ServiceMapper;
 import com.s_service.s_service.repository.ServiceRepository;
 import lombok.RequiredArgsConstructor;
@@ -18,5 +20,12 @@ public class ServiceServiceImpl implements ServiceService {
     public Page<ServiceResponse> getAll(Pageable pageable) {
         Page<com.s_service.s_service.model.Service> services = serviceRepository.findAll(pageable);
         return services.map(serviceMapper::toServiceResponse);
+    }
+
+    @Override
+    public ServiceResponse getServiceById(int id) {
+        com.s_service.s_service.model.Service service = serviceRepository.findById(id)
+                .orElseThrow(() -> new AppException(ErrorCode.SERVICE_NOT_FOUND));
+        return serviceMapper.toServiceResponse(service);
     }
 }

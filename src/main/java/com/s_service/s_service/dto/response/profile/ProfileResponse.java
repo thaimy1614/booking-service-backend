@@ -1,4 +1,4 @@
-package com.s_service.s_service.dto.response.account;
+package com.s_service.s_service.dto.response.profile;
 
 import lombok.Builder;
 import lombok.Data;

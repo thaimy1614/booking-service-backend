@@ -2,7 +2,7 @@ package com.s_service.s_service.controller;
 
 import com.s_service.s_service.dto.ApiResponse;
 import com.s_service.s_service.dto.request.profile.UpdateProfileRequest;
-import com.s_service.s_service.dto.response.account.ProfileResponse;
+import com.s_service.s_service.dto.response.profile.ProfileResponse;
 import com.s_service.s_service.service.profile.ProfileService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;

@@ -10,6 +10,7 @@ import com.s_service.s_service.service.authentication.AuthenticationService;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -21,6 +22,9 @@ import java.io.IOException;
 @Slf4j
 public class AuthenticationController {
     private final AuthenticationService accountService;
+
+    @Value("${application.frontend.url}")
+    private String frontendUrl;
 
     @PostMapping("/outbound/authentication")
     ApiResponse<LoginResponse> outboundAuthenticate(
@@ -93,6 +97,6 @@ public class AuthenticationController {
             @RequestParam("code") String token
     ) throws IOException {
         accountService.verifyAccount(email, token);
-        response.sendRedirect("http://localhost:3000/login");
+        response.sendRedirect(frontendUrl+"/login");
     }
 }

@@ -89,6 +89,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         if (!check) {
             throw new AppException(ErrorCode.USERNAME_OR_PASSWORD_INCORRECT);
         }
+        if(authUser.getStatus()== Account.AccountStatus.INACTIVE){
+            throw new AppException(ErrorCode.UNVERIFIED_ACCOUNT);
+        }
         var token = generateToken(authUser);
         return LoginResponse.builder()
                 .token(token)

@@ -1,13 +1,7 @@
 package com.s_service.s_service.config;
 
-import com.s_service.s_service.model.Account;
-import com.s_service.s_service.model.Category;
-import com.s_service.s_service.model.Role;
-import com.s_service.s_service.model.Service;
-import com.s_service.s_service.repository.AccountRepository;
-import com.s_service.s_service.repository.CategoryRepository;
-import com.s_service.s_service.repository.RoleRepository;
-import com.s_service.s_service.repository.ServiceRepository;
+import com.s_service.s_service.model.*;
+import com.s_service.s_service.repository.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationRunner;
@@ -24,6 +18,7 @@ public class ApplicationConfiguration {
     private final RoleRepository roleRepository;
     private final CategoryRepository categoryRepository;
     private final ServiceRepository serviceRepository;
+    private final StageRepository stageRepository;
 
     @Bean
     ApplicationRunner applicationRunner(AccountRepository accountRepository) {
@@ -362,6 +357,32 @@ public class ApplicationConfiguration {
                                         "on potential issues such as performance degradation, security risks, and system failures. It helps businesses take preventive measures.")
                                 .handleTime(2)
                                 .price(5000000)
+                                .build()
+                );
+            }
+            if(stageRepository.findAll().isEmpty()){
+                stageRepository.save(
+                  Stage.builder()
+                          .id(1)
+                          .name("RECEIVED REQUEST")
+                          .build()
+                );
+                stageRepository.save(
+                        Stage.builder()
+                                .id(2)
+                                .name("CONFIRMED REQUEST")
+                                .build()
+                );
+                stageRepository.save(
+                        Stage.builder()
+                                .id(3)
+                                .name("HANDLED REQUEST")
+                                .build()
+                );
+                stageRepository.save(
+                        Stage.builder()
+                                .id(4)
+                                .name("DONE")
                                 .build()
                 );
             }

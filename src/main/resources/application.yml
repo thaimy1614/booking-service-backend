@@ -44,3 +44,5 @@ application:
   api:
     prefix: /api
     url: ${API_URL}
+  frontend:
+    url: ${FRONT_END_PREFIX}

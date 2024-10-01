@@ -22,6 +22,7 @@ public enum ErrorCode {
     CATEGORY_NOT_FOUND(1013, "Category not found", HttpStatus.NOT_FOUND),
     CATEGORY_EXISTED(1014, "Category existed", HttpStatus.NOT_FOUND),
     SERVICE_EXISTED(1015, "Service existed", HttpStatus.NOT_FOUND),
+    UNVERIFIED_ACCOUNT(1016, "User not verified yet", HttpStatus.LOCKED),
     ;
 
     private final int code;

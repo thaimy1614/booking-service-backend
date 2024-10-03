@@ -55,10 +55,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final OutboundUserClient outboundUserClient;
     private final RoleRepository roleRepository;
     private final ProfileRepository profileRepository;
-
-    @Value("${application.api.url}")
-    private String apiUrl;
-
     @NonFinal
     @Value("${outbound.identity.client-id}")
     protected String CLIENT_ID;
@@ -68,6 +64,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @NonFinal
     @Value("${outbound.identity.redirect-uri}")
     protected String REDIRECT_URI;
+    @Value("${application.api.url}")
+    private String apiUrl;
     @Value("${jwt.signer-key}")
     private String KEY;
     @Value("${jwt.expiration-duration}")
@@ -91,7 +89,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         if (!check) {
             throw new AppException(ErrorCode.USERNAME_OR_PASSWORD_INCORRECT);
         }
-        if(authUser.getStatus()== Account.AccountStatus.INACTIVE){
+        if (authUser.getStatus() == Account.AccountStatus.INACTIVE) {
             Profile profile = profileRepository.findById(authUser.getId()).orElseThrow(
                     () -> new AppException(ErrorCode.USER_NOT_EXISTED)
             );
@@ -250,7 +248,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             log.error(e.getMessage());
             throw new AppException(ErrorCode.UNCATEGORIZED_EXCEPTION);
         }
-        emailService.sendVerification(profile.getName(), profile.getEmail(), apiUrl+"/identity/verify?email=" + profile.getEmail() + "&code=" + UUID);
+        emailService.sendVerification(profile.getName(), profile.getEmail(), apiUrl + "/identity/verify?email=" + profile.getEmail() + "&code=" + UUID);
     }
 
     @Override

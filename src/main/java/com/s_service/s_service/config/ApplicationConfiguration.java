@@ -360,12 +360,12 @@ public class ApplicationConfiguration {
                                 .build()
                 );
             }
-            if(stageRepository.findAll().isEmpty()){
+            if (stageRepository.findAll().isEmpty()) {
                 stageRepository.save(
-                  Stage.builder()
-                          .id(1)
-                          .name("RECEIVED REQUEST")
-                          .build()
+                        Stage.builder()
+                                .id(1)
+                                .name("RECEIVED REQUEST")
+                                .build()
                 );
                 stageRepository.save(
                         Stage.builder()

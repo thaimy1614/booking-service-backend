@@ -42,7 +42,7 @@ public class Order {
         DONE
     }
 
-    public enum PaymentMethod{
+    public enum PaymentMethod {
         QR,
         VNPAY,
         BALANCE

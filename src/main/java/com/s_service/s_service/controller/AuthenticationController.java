@@ -97,6 +97,6 @@ public class AuthenticationController {
             @RequestParam("code") String token
     ) throws IOException {
         accountService.verifyAccount(email, token);
-        response.sendRedirect(frontendUrl+"/login");
+        response.sendRedirect(frontendUrl + "/login");
     }
 }

@@ -99,7 +99,7 @@ public class AdminController {
     }
 
     @PostMapping("/service")
-    ApiResponse<ServiceResponse> addService(@RequestBody ServiceRequest request){
+    ApiResponse<ServiceResponse> addService(@RequestBody ServiceRequest request) {
         ServiceResponse response = serviceService.addService(request);
         return ApiResponse.<ServiceResponse>builder()
                 .message("Add service successfully!")
@@ -111,7 +111,7 @@ public class AdminController {
     ApiResponse<ServiceResponse> updateService(
             @PathVariable int id,
             @RequestBody ServiceRequest request
-    ){
+    ) {
         ServiceResponse response = serviceService.updateService(id, request);
         return ApiResponse.<ServiceResponse>builder()
                 .message("Update service successfully!")

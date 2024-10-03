@@ -7,7 +7,10 @@ import org.springframework.data.domain.Pageable;
 
 public interface ServiceService {
     Page<ServiceResponse> getAll(Pageable pageable);
+
     ServiceResponse getServiceById(int id);
+
     ServiceResponse addService(ServiceRequest serviceRequest);
+
     ServiceResponse updateService(int id, ServiceRequest serviceRequest);
 }

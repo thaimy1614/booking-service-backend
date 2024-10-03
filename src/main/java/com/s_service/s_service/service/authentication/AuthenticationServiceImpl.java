@@ -18,6 +18,7 @@ import com.s_service.s_service.model.Account;
 import com.s_service.s_service.model.Profile;
 import com.s_service.s_service.model.Role;
 import com.s_service.s_service.repository.AccountRepository;
+import com.s_service.s_service.repository.ProfileRepository;
 import com.s_service.s_service.repository.RoleRepository;
 import com.s_service.s_service.service.notification.mail.EmailService;
 import com.s_service.s_service.service.profile.ProfileService;
@@ -53,6 +54,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final OutboundIdentityClient outboundIdentityClient;
     private final OutboundUserClient outboundUserClient;
     private final RoleRepository roleRepository;
+    private final ProfileRepository profileRepository;
 
     @Value("${application.api.url}")
     private String apiUrl;
@@ -90,6 +92,10 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             throw new AppException(ErrorCode.USERNAME_OR_PASSWORD_INCORRECT);
         }
         if(authUser.getStatus()== Account.AccountStatus.INACTIVE){
+            Profile profile = profileRepository.findById(authUser.getId()).orElseThrow(
+                    () -> new AppException(ErrorCode.USER_NOT_EXISTED)
+            );
+            sendVerificationEmail(profile);
             throw new AppException(ErrorCode.UNVERIFIED_ACCOUNT);
         }
         var token = generateToken(authUser);
@@ -231,16 +237,20 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         profileService.saveProfile(profile);
 
         if (account.getStatus() == Account.AccountStatus.INACTIVE) {
-            String UUID = java.util.UUID.randomUUID().toString();
-            try {
-                redisTemplate.opsForValue().set("verify:" + account.getEmail(), UUID);
-            } catch (Exception e) {
-                log.error(e.getMessage());
-                throw new AppException(ErrorCode.UNCATEGORIZED_EXCEPTION);
-            }
-            emailService.sendVerification(profile.getName(), profile.getEmail(), apiUrl+"/identity/verify?email=" + profile.getEmail() + "&code=" + UUID);
+            sendVerificationEmail(profile);
         }
         return SignupResponse.builder().success(true).build();
+    }
+
+    private void sendVerificationEmail(Profile profile) {
+        String UUID = java.util.UUID.randomUUID().toString();
+        try {
+            redisTemplate.opsForValue().set("verify:" + profile.getEmail(), UUID);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            throw new AppException(ErrorCode.UNCATEGORIZED_EXCEPTION);
+        }
+        emailService.sendVerification(profile.getName(), profile.getEmail(), apiUrl+"/identity/verify?email=" + profile.getEmail() + "&code=" + UUID);
     }
 
     @Override

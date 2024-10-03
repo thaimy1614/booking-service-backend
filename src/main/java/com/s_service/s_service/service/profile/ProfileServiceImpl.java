@@ -2,6 +2,8 @@ package com.s_service.s_service.service.profile;
 
 import com.s_service.s_service.dto.request.profile.UpdateProfileRequest;
 import com.s_service.s_service.dto.response.profile.ProfileResponse;
+import com.s_service.s_service.exception.AppException;
+import com.s_service.s_service.exception.ErrorCode;
 import com.s_service.s_service.mapper.ProfileMapper;
 import com.s_service.s_service.model.Profile;
 import com.s_service.s_service.repository.ProfileRepository;
@@ -30,11 +32,14 @@ public class ProfileServiceImpl implements ProfileService {
 
     @Override
     public ProfileResponse updateProfile(UpdateProfileRequest request, String userId) {
-        Profile profile = profileRepository.findById(userId).orElseGet(
-                Profile::new
+        Profile profile = profileRepository.findById(userId).orElseThrow(
+                () -> new AppException(ErrorCode.PROFILE_NOT_FOUND)
         );
 
-        profile = profileMapper.toProfile(request);
+        profile.setName(request.getName());
+        profile.setAddress(request.getAddress());
+        profile.setPhone(request.getPhone());
+
         profileRepository.save(profile);
 
         return profileMapper.toProfileResponse(profile);

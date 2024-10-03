@@ -6,10 +6,7 @@ import com.s_service.s_service.dto.response.profile.ProfileResponse;
 import com.s_service.s_service.service.profile.ProfileService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -31,7 +28,7 @@ public class ProfileController {
 
     @PostMapping()
     ApiResponse<ProfileResponse> updateProfile(
-            UpdateProfileRequest request,
+            @RequestBody UpdateProfileRequest request,
             JwtAuthenticationToken token
     ) {
         String userId = token.getName();

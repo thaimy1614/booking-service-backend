@@ -26,6 +26,9 @@ spring:
       mail.smtp.ssl.trust: ${SPRING_MAIL_PROPERTIES_MAIL_SMTP_SSL_TRUST:*}
       mail.smtp.auth: ${SPRING_MAIL_PROPERTIES_MAIL_SMTP_AUTH:true}
       mail.smtp.starttls.enable: ${SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE:true}
+  sql:
+    init:
+      encoding: UTF-8
 
 outbound:
   identity:
@@ -40,6 +43,12 @@ jwt:
 
 server:
   port: 8080
+  servlet:
+    encoding:
+      charset: utf-8
+      force: true
+      enabled: true
+
 application:
   api:
     prefix: /api

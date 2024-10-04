@@ -6,6 +6,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnTransformer;
+
+import java.util.List;
 
 @Entity
 @Data
@@ -25,6 +28,11 @@ public class Service {
     private int price;
 
     private int handleTime;
+
+    @Column(name = "benefits")
+    @ColumnTransformer(write = "?::jsonb")
+    @Convert(converter = JsonbConverter.class)
+    private List<String> benefits;
 
     @JsonBackReference
     @ManyToOne

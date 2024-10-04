@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnTransformer;
 
 import java.util.List;
 
@@ -23,6 +24,11 @@ public class Category {
 
     @Column(length = 500)
     private String description;
+
+    @Column(name = "benefits")
+    @Convert(converter = JsonbConverter.class)
+    @ColumnTransformer(write = "?::jsonb")
+    private List<String> benefits;
 
     @OneToMany(mappedBy = "category", targetEntity = Service.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonManagedReference

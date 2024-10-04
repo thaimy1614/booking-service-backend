@@ -13,4 +13,5 @@ public class CategoryResponse {
     private String name;
     private String description;
     private List<ServiceResponse> services;
+    private List<String> benefits;
 }

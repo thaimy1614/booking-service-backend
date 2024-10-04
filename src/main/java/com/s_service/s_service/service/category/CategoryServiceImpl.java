@@ -34,6 +34,14 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
+    public CategoryResponse getCategoryWithServices(int id) {
+        Category category = categoryRepository.findById(id).orElseThrow(
+                () -> new AppException(ErrorCode.CATEGORY_NOT_FOUND)
+        );
+        return categoryMapper.toCategoryResponse(category);
+    }
+
+    @Override
     public List<GetCategoryResponse> getAllCategories() {
         List<Category> categories = categoryRepository.findAll();
         return categories.stream().map(categoryMapper::toGetCategoryResponse

@@ -14,4 +14,6 @@ public interface ProfileService {
     ProfileResponse updateProfile(UpdateProfileRequest request, String userId);
 
     Page<ProfileResponse> getAll(Pageable pageable);
+
+    Long countUsers();
 }

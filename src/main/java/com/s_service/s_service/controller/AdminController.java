@@ -28,6 +28,24 @@ public class AdminController {
     private final CategoryService categoryService;
     private final ServiceService serviceService;
 
+    @GetMapping("/user/count")
+    ApiResponse<Long> getUserCount() {
+        long count = profileService.countUsers();
+        return ApiResponse.<Long>builder()
+                .result(count)
+                .message("Count number of users successfully")
+                .build();
+    }
+
+    @GetMapping("/service/count")
+    ApiResponse<Long> getServiceCount() {
+        long count = serviceService.countServices();
+        return ApiResponse.<Long>builder()
+                .result(count)
+                .message("Count number of services successfully")
+                .build();
+    }
+
     @GetMapping("/user")
     ApiResponse<Page<ProfileResponse>> getAllProfile(
             @RequestParam(defaultValue = "0") int page,

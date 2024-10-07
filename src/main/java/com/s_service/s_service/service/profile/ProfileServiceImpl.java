@@ -52,5 +52,10 @@ public class ProfileServiceImpl implements ProfileService {
         return profiles.map(profileMapper::toProfileResponse);
     }
 
+    @Override
+    public Long countUsers() {
+        return profileRepository.count();
+    }
+
 
 }

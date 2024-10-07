@@ -58,4 +58,9 @@ public class ServiceServiceImpl implements ServiceService {
         service.setCategory(category);
         return serviceMapper.toServiceResponse(serviceRepository.save(service));
     }
+
+    @Override
+    public Long countServices() {
+        return serviceRepository.count();
+    }
 }

@@ -13,4 +13,6 @@ public interface ServiceService {
     ServiceResponse addService(ServiceRequest serviceRequest);
 
     ServiceResponse updateService(int id, ServiceRequest serviceRequest);
+
+    Long countServices();
 }

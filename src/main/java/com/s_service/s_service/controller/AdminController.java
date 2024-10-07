@@ -35,7 +35,7 @@ public class AdminController {
         long count = profileService.countUsers();
         return ApiResponse.<Long>builder()
                 .result(count)
-                .message("Count number of users successfully")
+                .message("Count number of users successfully!")
                 .build();
     }
 
@@ -44,7 +44,7 @@ public class AdminController {
         long count = serviceService.countServices();
         return ApiResponse.<Long>builder()
                 .result(count)
-                .message("Count number of services successfully")
+                .message("Count number of services successfully!")
                 .build();
     }
 
@@ -53,7 +53,16 @@ public class AdminController {
         long count = orderService.countOrders();
         return ApiResponse.<Long>builder()
                 .result(count)
-                .message("Count number of services successfully")
+                .message("Count number of orders successfully!")
+                .build();
+    }
+
+    @GetMapping("/order/total-revenue")
+    ApiResponse<Long> getTotalRevenue() {
+        long count = orderService.getTotalRevenue();
+        return ApiResponse.<Long>builder()
+                .result(count)
+                .message("Get total revenue successfully!")
                 .build();
     }
 

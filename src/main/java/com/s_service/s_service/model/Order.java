@@ -29,6 +29,8 @@ public class Order {
     @JoinColumn(name = "profile_id")
     private Profile profile;
 
+    private Long price;
+
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
 

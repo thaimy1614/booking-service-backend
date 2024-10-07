@@ -9,6 +9,7 @@ import com.s_service.s_service.dto.response.category.GetCategoryResponse;
 import com.s_service.s_service.dto.response.profile.ProfileResponse;
 import com.s_service.s_service.dto.response.service.ServiceResponse;
 import com.s_service.s_service.service.category.CategoryService;
+import com.s_service.s_service.service.order.OrderService;
 import com.s_service.s_service.service.profile.ProfileService;
 import com.s_service.s_service.service.service.ServiceService;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +28,7 @@ public class AdminController {
     private final ProfileService profileService;
     private final CategoryService categoryService;
     private final ServiceService serviceService;
+    private final OrderService orderService;
 
     @GetMapping("/user/count")
     ApiResponse<Long> getUserCount() {
@@ -40,6 +42,15 @@ public class AdminController {
     @GetMapping("/service/count")
     ApiResponse<Long> getServiceCount() {
         long count = serviceService.countServices();
+        return ApiResponse.<Long>builder()
+                .result(count)
+                .message("Count number of services successfully")
+                .build();
+    }
+
+    @GetMapping("/order/count")
+    ApiResponse<Long> getOrderCount() {
+        long count = orderService.countOrders();
         return ApiResponse.<Long>builder()
                 .result(count)
                 .message("Count number of services successfully")

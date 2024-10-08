@@ -6,6 +6,7 @@ import com.s_service.s_service.dto.request.category.CategoryCreationRequest;
 import com.s_service.s_service.dto.request.profile.UpdateProfileRequest;
 import com.s_service.s_service.dto.request.service.ServiceRequest;
 import com.s_service.s_service.dto.response.category.GetCategoryResponse;
+import com.s_service.s_service.dto.response.order.CategoryAnalysisResponse;
 import com.s_service.s_service.dto.response.profile.ProfileResponse;
 import com.s_service.s_service.dto.response.service.ServiceResponse;
 import com.s_service.s_service.service.category.CategoryService;
@@ -63,6 +64,15 @@ public class AdminController {
         return ApiResponse.<Long>builder()
                 .result(count)
                 .message("Get total revenue successfully!")
+                .build();
+    }
+
+    @GetMapping("/order/analyze-category")
+    ApiResponse<List<CategoryAnalysisResponse>> analyzeCategory(){
+        List<CategoryAnalysisResponse> response = orderService.analyzeCategory();
+        return ApiResponse.<List<CategoryAnalysisResponse>>builder()
+                .result(response)
+                .message("Analyze category successfully!")
                 .build();
     }
 

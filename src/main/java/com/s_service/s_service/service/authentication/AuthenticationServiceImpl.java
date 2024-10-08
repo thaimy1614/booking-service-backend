@@ -197,6 +197,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                             .email(userInfo.getEmail())
                             .name(userInfo.getGivenName() + userInfo.getFamilyName())
                             .address(userInfo.getLocale())
+                            .status(Account.AccountStatus.ACTIVE)
                             .build();
 
                     profileService.saveProfile(profile);

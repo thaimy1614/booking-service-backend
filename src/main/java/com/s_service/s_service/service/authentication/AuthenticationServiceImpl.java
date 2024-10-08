@@ -231,6 +231,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         account = accountRepository.save(account);
 
         Profile profile = profileMapper.toProfile(request);
+        profile.setStatus(Account.AccountStatus.INACTIVE);
         profile.setId(account.getId());
         profileService.saveProfile(profile);
 
@@ -305,6 +306,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         if (token.equals(redisTemplate.opsForValue().get("verify:" + email))) {
             redisTemplate.delete("verify:" + email);
             account.setStatus(Account.AccountStatus.ACTIVE);
+            Profile profile = profileRepository.findByEmail(email);
+            profile.setStatus(Account.AccountStatus.ACTIVE);
+            profileService.saveProfile(profile);
             accountRepository.save(account);
         } else {
             throw new AppException(ErrorCode.INCORRECT_VERIFY_CODE);

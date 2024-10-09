@@ -45,6 +45,6 @@ public class Account {
     }
 
     public enum AccountStatus {
-        ACTIVE, INACTIVE
+        ACTIVE, INACTIVE, DELETED
     }
 }

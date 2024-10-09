@@ -12,5 +12,5 @@ import java.util.List;
 public class CategoryCreationRequest {
     private String name;
     private String description;
-    private List<String> benefits;
+    private String[] benefits;
 }

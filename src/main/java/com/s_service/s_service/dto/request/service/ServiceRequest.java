@@ -12,8 +12,6 @@ import java.util.List;
 public class ServiceRequest {
     private String name;
     private String description;
-    private int categoryId;
-    private int handleTime;
-    private int price;
-    private List<String> benefits;
+    private String categoryName;
+    private String[] benefits;
 }

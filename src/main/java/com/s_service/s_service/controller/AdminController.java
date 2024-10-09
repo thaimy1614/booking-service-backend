@@ -9,6 +9,7 @@ import com.s_service.s_service.dto.response.category.GetCategoryResponse;
 import com.s_service.s_service.dto.response.order.CategoryAnalysisResponse;
 import com.s_service.s_service.dto.response.profile.ProfileResponse;
 import com.s_service.s_service.dto.response.service.ServiceResponse;
+import com.s_service.s_service.service.authentication.AuthenticationService;
 import com.s_service.s_service.service.category.CategoryService;
 import com.s_service.s_service.service.order.OrderService;
 import com.s_service.s_service.service.profile.ProfileService;
@@ -30,6 +31,7 @@ public class AdminController {
     private final CategoryService categoryService;
     private final ServiceService serviceService;
     private final OrderService orderService;
+    private final AuthenticationService accountService;
 
     @GetMapping("/user/count")
     ApiResponse<Long> getUserCount() {
@@ -89,6 +91,12 @@ public class AdminController {
                 .build();
     }
 
+    @DeleteMapping("/user/{userId}")
+    ApiResponse<Boolean> deleteUser(@PathVariable String userId) {
+        accountService.deleteAccount(userId);
+        return ApiResponse.<Boolean>builder().result(true).build();
+    }
+
     @PutMapping("/user/{userId}")
     ApiResponse<ProfileResponse> updateUserProfile(
             @PathVariable("userId") String userId,
@@ -136,7 +144,7 @@ public class AdminController {
     @GetMapping("/service")
     ApiResponse<Page<ServiceResponse>> getServices(
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size
+            @RequestParam(defaultValue = "100") int size
     ) {
         Pageable pageable = PageRequest.of(page, size);
         Page<ServiceResponse> response = serviceService.getAll(pageable);

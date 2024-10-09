@@ -11,6 +11,7 @@ import com.s_service.s_service.repository.CategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -21,7 +22,10 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public GetCategoryResponse addCategory(CategoryCreationRequest request) {
-        Category category = categoryMapper.toCategory(request);
+        Category category = new Category();
+        category.setName(request.getName());
+        category.setDescription(request.getDescription());
+        category.setBenefits(Arrays.asList(request.getBenefits()));
         category = categoryRepository.save(category);
         return categoryMapper.toGetCategoryResponse(category);
     }
@@ -56,6 +60,7 @@ public class CategoryServiceImpl implements CategoryService {
 
         category.setName(request.getName());
         category.setDescription(request.getDescription());
+        category.setBenefits(Arrays.asList(request.getBenefits()));
 
         category = categoryRepository.save(category);
 

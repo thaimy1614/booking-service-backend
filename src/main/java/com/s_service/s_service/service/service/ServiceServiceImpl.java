@@ -13,6 +13,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
+
 @Service
 @RequiredArgsConstructor
 public class ServiceServiceImpl implements ServiceService {
@@ -39,11 +41,16 @@ public class ServiceServiceImpl implements ServiceService {
 
     @Override
     public ServiceResponse addService(ServiceRequest serviceRequest) {
-        Category category = categoryRepository.findById(serviceRequest.getCategoryId()).orElseThrow(
+        Category category = categoryRepository.findByName(serviceRequest.getCategoryName()).orElseThrow(
                 () -> new AppException(ErrorCode.CATEGORY_NOT_FOUND));
-        com.s_service.s_service.model.Service service = serviceMapper.toService(serviceRequest);
+        com.s_service.s_service.model.Service service = new com.s_service.s_service.model.Service();
+        service.setDescription(serviceRequest.getDescription());
+        service.setName(serviceRequest.getName());
         service.setCategory(category);
-        return serviceMapper.toServiceResponse(serviceRepository.save(service));
+        service.setBenefits(Arrays.asList(serviceRequest.getBenefits()));
+        ServiceResponse response = serviceMapper.toServiceResponse(serviceRepository.save(service));
+        response.setCategoryName(serviceRequest.getCategoryName());
+        return response;
     }
 
     @Override
@@ -51,12 +58,17 @@ public class ServiceServiceImpl implements ServiceService {
         serviceRepository.findById(id).orElseThrow(
                 () -> new AppException(ErrorCode.SERVICE_NOT_FOUND)
         );
-        Category category = categoryRepository.findById(serviceRequest.getCategoryId()).orElseThrow(
+        Category category = categoryRepository.findByName(serviceRequest.getCategoryName()).orElseThrow(
                 () -> new AppException(ErrorCode.CATEGORY_NOT_FOUND));
-        com.s_service.s_service.model.Service service = serviceMapper.toService(serviceRequest);
+        com.s_service.s_service.model.Service service = new com.s_service.s_service.model.Service();
+        service.setDescription(serviceRequest.getDescription());
+        service.setName(serviceRequest.getName());
         service.setId(id);
         service.setCategory(category);
-        return serviceMapper.toServiceResponse(serviceRepository.save(service));
+        service.setBenefits(Arrays.asList(serviceRequest.getBenefits()));
+        ServiceResponse response = serviceMapper.toServiceResponse(serviceRepository.save(service));
+        response.setCategoryName(serviceRequest.getCategoryName());
+        return response;
     }
 
     @Override

@@ -316,6 +316,14 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         }
     }
 
+    @Override
+    public void deleteAccount(String userId) {
+        accountRepository.deleteById(userId);
+        Profile profile = profileRepository.findById(userId).orElseThrow();
+        profile.setStatus(Account.AccountStatus.DELETED);
+        profileService.saveProfile(profile);
+    }
+
     private String generate() {
         int OTP = new Random().nextInt(900000) + 100000;
         return String.valueOf(OTP);

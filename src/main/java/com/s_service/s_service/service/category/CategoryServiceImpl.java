@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -33,15 +34,35 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public List<CategoryResponse> getAllCategoriesWithServices() {
         List<Category> categories = categoryRepository.findAll();
-        return categories.stream().map(categoryMapper::toCategoryResponse
-        ).toList();
+
+        return categories.stream()
+                .filter(category -> category.getCategoryStatus() != Category.CategoryStatus.DELETED)
+                .map(category -> {
+                    List<com.s_service.s_service.model.Service> filteredServices = category.getServices().stream()
+                            .filter(service -> service.getServiceStatus() != com.s_service.s_service.model.Service.ServiceStatus.DELETED)
+                            .collect(Collectors.toList());
+
+                    category.setServices(filteredServices);
+
+                    return categoryMapper.toCategoryResponse(category);
+                })
+                .collect(Collectors.toList());
     }
+
 
     @Override
     public CategoryResponse getCategoryWithServices(int id) {
         Category category = categoryRepository.findById(id).orElseThrow(
                 () -> new AppException(ErrorCode.CATEGORY_NOT_FOUND)
         );
+        if (category.getCategoryStatus() == Category.CategoryStatus.DELETED) {
+            throw new AppException(ErrorCode.CATEGORY_NOT_FOUND);
+        }
+        List<com.s_service.s_service.model.Service> filteredServices = category.getServices().stream()
+                .filter(service -> service.getServiceStatus() != com.s_service.s_service.model.Service.ServiceStatus.DELETED)
+                .collect(Collectors.toList());
+
+        category.setServices(filteredServices);
         return categoryMapper.toCategoryResponse(category);
     }
 

@@ -26,7 +26,8 @@ public class Category {
     private String description;
 
     @Enumerated(EnumType.STRING)
-    private CategoryStatus categoryStatus;
+    @Column(name = "status")
+    private CategoryStatus categoryStatus = CategoryStatus.AVAILABLE;
 
     @Column(name = "benefits")
     @Convert(converter = JsonbConverter.class)

@@ -138,12 +138,11 @@ public class ApplicationConfiguration {
                                 .name("Brand Research")
                                 .category(categoryRepository.findById(1).orElse(null))
                                 .description("Nghiên cứu thương hiệu là quá trình thu thập và phân tích dữ liệu về danh tính, vị trí thị trường, nhận thức của khách hàng và hiệu suất tổng thể của một thương hiệu. Nó giúp các doanh nghiệp hiểu cách khách hàng nhìn nhận thương hiệu của họ, xác định điểm mạnh và điểm yếu, và phát triển các chiến lược để cải thiện nhận thức thương hiệu, lòng trung thành và thị phần.")
-                                .handleTime(3)
+
                                 .benefits(List.of(
                                         "Brand Research giúp doanh nghiệp nắm bắt được cách khách hàng nhìn nhận về thương hiệu của mình, bao gồm các yếu tố như logo, thông điệp.",
                                         "Hiểu nhận thức của khách hàng.",
                                         "Cải thiện vị trí thị trường."))
-                                .price(5000000)
                                 .build()
                 );
                 serviceRepository.save(
@@ -151,13 +150,12 @@ public class ApplicationConfiguration {
                                 .name("Online Survey")
                                 .category(categoryRepository.findById(1).orElse(null))
                                 .description("Khảo sát trực tuyến là một bảng câu hỏi kỹ thuật số được thiết kế để thu thập thông tin từ người tham gia qua internet. Khảo sát trực tuyến được sử dụng rộng rãi trong các ngành khác nhau cho nghiên cứu thị trường, phản hồi của khách hàng, nghiên cứu học thuật và sự tham gia của nhân viên. Chúng cung cấp một cách nhanh chóng, mở rộng và hiệu quả về chi phí để thu thập một lượng lớn dữ liệu từ một đối tượng rộng.")
-                                .handleTime(2)
+
                                 .benefits(List.of(
                                         "Thu thập dữ liệu nhanh chóng và hiệu quả.",
                                         "Giảm chi phí nghiên cứu thị trường.",
                                         "Dễ dàng phân tích và báo cáo dữ liệu."
                                 ))
-                                .price(2000000)
                                 .build()
                 );
                 serviceRepository.save(
@@ -165,13 +163,12 @@ public class ApplicationConfiguration {
                                 .name("Strategic Consulting")
                                 .category(categoryRepository.findById(1).orElse(null))
                                 .description("Tư vấn chiến lược liên quan đến việc giúp các doanh nghiệp xác định các chiến lược dài hạn và xác định cơ hội tăng trưởng, cải tiến và lợi thế cạnh tranh. Các chuyên gia tư vấn phân tích xu hướng thị trường, hiệu quả hoạt động và cấu trúc tổ chức để cung cấp những hiểu biết có thể hành động.")
-                                .handleTime(5)
+
                                 .benefits(List.of(
                                         "Xác định chiến lược dài hạn hiệu quả.",
                                         "Tối ưu hóa hoạt động và cấu trúc tổ chức.",
                                         "Cung cấp những hiểu biết có thể hành động."
                                 ))
-                                .price(10000000)
                                 .build()
                 );
                 serviceRepository.save(
@@ -179,13 +176,12 @@ public class ApplicationConfiguration {
                                 .name("Storage")
                                 .category(categoryRepository.findById(1).orElse(null))
                                 .description("Dịch vụ lưu trữ cung cấp các giải pháp lưu trữ dữ liệu có khả năng mở rộng và bảo mật, từ lưu trữ trên đám mây đến các tùy chọn tại chỗ. Những dịch vụ này đảm bảo rằng dữ liệu có thể truy cập, bền vững và được bảo vệ khỏi mất mát hoặc truy cập trái phép.")
-                                .handleTime(4)
+
                                 .benefits(List.of(
                                         "Dữ liệu luôn sẵn có và bảo mật.",
                                         "Giải pháp lưu trữ linh hoạt và mở rộng.",
                                         "Đảm bảo tính bền vững của dữ liệu."
                                 ))
-                                .price(3000000)
                                 .build()
                 );
                 serviceRepository.save(
@@ -193,13 +189,12 @@ public class ApplicationConfiguration {
                                 .name("Compute")
                                 .category(categoryRepository.findById(1).orElse(null))
                                 .description("Dịch vụ tính toán cung cấp sức mạnh xử lý cần thiết để chạy các ứng dụng, thực hiện phân tích dữ liệu và xử lý các tác vụ tính toán quy mô lớn trong các môi trường đám mây. Những dịch vụ này cho phép các doanh nghiệp mở rộng tài nguyên tính toán dựa trên nhu cầu.")
-                                .handleTime(3)
+
                                 .benefits(List.of(
                                         "Tăng cường sức mạnh xử lý cho ứng dụng.",
                                         "Mở rộng tài nguyên tính toán linh hoạt.",
                                         "Giảm thiểu thời gian xử lý và phân tích dữ liệu."
                                 ))
-                                .price(4000000)
                                 .build()
                 );
                 serviceRepository.save(
@@ -207,13 +202,12 @@ public class ApplicationConfiguration {
                                 .name("Developer Tools")
                                 .category(categoryRepository.findById(1).orElse(null))
                                 .description("Công cụ phát triển bao gồm một loạt phần mềm và dịch vụ hỗ trợ việc phát triển, kiểm tra, triển khai và quản lý các ứng dụng. Những công cụ này đơn giản hóa chu trình phát triển, giúp việc lập trình, gỡ lỗi và cộng tác trở nên dễ dàng và hiệu quả hơn.")
-                                .handleTime(2)
+
                                 .benefits(List.of(
                                         "Giúp tối ưu hóa quy trình phát triển.",
                                         "Cải thiện khả năng hợp tác giữa các lập trình viên.",
                                         "Rút ngắn thời gian phát triển ứng dụng."
                                 ))
-                                .price(1500000)
                                 .build()
                 );
                 serviceRepository.save(
@@ -221,13 +215,12 @@ public class ApplicationConfiguration {
                                 .name("Networking & Content Delivery")
                                 .category(categoryRepository.findById(1).orElse(null))
                                 .description("Dịch vụ mạng và phân phối nội dung cho phép các doanh nghiệp cung cấp nội dung web, phương tiện và ứng dụng một cách nhanh chóng và bảo mật trên toàn cầu. Mạng lưới phân phối nội dung (CDN) tối ưu hóa độ trễ, trong khi các giải pháp mạng đảm bảo giao tiếp đáng tin cậy giữa các thiết bị và hệ thống.")
-                                .handleTime(3)
+
                                 .benefits(List.of(
                                         "Cải thiện tốc độ tải trang web.",
                                         "Giảm thiểu độ trễ trong việc truyền tải nội dung.",
                                         "Đảm bảo tính sẵn có của nội dung."
                                 ))
-                                .price(3500000)
                                 .build()
                 );
                 serviceRepository.save(
@@ -235,13 +228,12 @@ public class ApplicationConfiguration {
                                 .name("Management Tools")
                                 .category(categoryRepository.findById(1).orElse(null))
                                 .description("Các công cụ quản lý giúp doanh nghiệp giám sát, quản lý và tự động hóa các tác vụ trong hạ tầng CNTT, đảm bảo hiệu suất tối ưu, phân bổ tài nguyên và hiệu quả hoạt động. Chúng cung cấp cái nhìn tổng quan về tình trạng hệ thống và cho phép giải quyết vấn đề một cách chủ động.")
-                                .handleTime(3)
+
                                 .benefits(List.of(
                                         "Giám sát tình trạng hệ thống dễ dàng.",
                                         "Tối ưu hóa phân bổ tài nguyên.",
                                         "Tăng cường khả năng giải quyết vấn đề."
                                 ))
-                                .price(2500000)
                                 .build()
                 );
                 serviceRepository.save(
@@ -249,13 +241,12 @@ public class ApplicationConfiguration {
                                 .name("Analysis")
                                 .category(categoryRepository.findById(1).orElse(null))
                                 .description("Các dịch vụ phân tích cung cấp công cụ và kỹ thuật để phân tích dữ liệu doanh nghiệp, xác định xu hướng và đưa ra quyết định thông minh. Những dịch vụ này bao gồm mọi thứ từ phân tích dữ liệu lớn đến các nền tảng trí tuệ doanh nghiệp cung cấp những hiểu biết có thể hành động.")
-                                .handleTime(4)
+
                                 .benefits(List.of(
                                         "Cung cấp những hiểu biết sâu sắc về dữ liệu.",
                                         "Giúp đưa ra quyết định dựa trên dữ liệu.",
                                         "Xác định xu hướng và cơ hội mới."
                                 ))
-                                .price(5000000)
                                 .build()
                 );
                 serviceRepository.save(
@@ -263,13 +254,13 @@ public class ApplicationConfiguration {
                                 .name("Desktop & App Streaming")
                                 .category(categoryRepository.findById(1).orElse(null))
                                 .description("Dịch vụ phát trực tuyến desktop và ứng dụng cho phép người dùng truy cập từ xa các ứng dụng và desktop từ bất kỳ thiết bị nào có kết nối internet. Những dịch vụ này được sử dụng rộng rãi trong các môi trường làm việc ảo và cho việc cung cấp phần mềm đến tay người dùng mà không cần cài đặt tại địa phương.")
-                                .handleTime(2)
+
                                 .benefits(List.of(
                                         "Truy cập ứng dụng từ xa dễ dàng.",
                                         "Giảm thiểu chi phí cài đặt phần mềm.",
                                         "Tăng cường khả năng làm việc từ xa."
                                 ))
-                                .price(3000000)
+
                                 .build()
                 );
 
@@ -278,13 +269,11 @@ public class ApplicationConfiguration {
                                 .name("Security Configuration Assessment")
                                 .category(categoryRepository.findById(2).orElse(null))
                                 .description("Đánh giá cấu hình bảo mật xem xét các hệ thống CNTT của một tổ chức để đảm bảo rằng chúng được cấu hình an toàn. Nó xác định các lỗ hổng tiềm ẩn, cấu hình sai và vấn đề tuân thủ, đảm bảo rằng các thực tiễn tốt nhất về bảo mật được thực hiện.")
-                                .handleTime(4)
                                 .benefits(List.of(
                                         "Giảm thiểu rủi ro bảo mật.",
                                         "Cải thiện tuân thủ quy định.",
                                         "Bảo vệ thông tin nhạy cảm."
                                 ))
-                                .price(6000000)
                                 .build()
                 );
                 serviceRepository.save(
@@ -292,13 +281,11 @@ public class ApplicationConfiguration {
                                 .name("Penetration Testing")
                                 .category(categoryRepository.findById(2).orElse(null))
                                 .description("Kiểm tra xâm nhập, còn được gọi là hacking đạo đức, mô phỏng các cuộc tấn công mạng để đánh giá bảo mật của một hệ thống CNTT. Điều này bao gồm việc xác định các lỗ hổng trong phần mềm, mạng và các quy trình, giúp các tổ chức tăng cường bảo mật.")
-                                .handleTime(6)
                                 .benefits(List.of(
                                         "Phát hiện lỗ hổng bảo mật trước khi bị tấn công.",
                                         "Cải thiện chiến lược an ninh mạng.",
                                         "Tăng cường sự tự tin trong bảo mật hệ thống."
                                 ))
-                                .price(8000000)
                                 .build()
                 );
                 serviceRepository.save(
@@ -308,13 +295,11 @@ public class ApplicationConfiguration {
                                 .description("Bảo mật thông tin bảo vệ tài sản kỹ thuật số của tổ chức khỏi các mối đe dọa, " +
                                         "như vi phạm dữ liệu, tấn công mạng và truy cập trái phép. Dịch vụ này giúp doanh nghiệp " +
                                         "đảm bảo tính bảo mật, toàn vẹn và khả năng truy cập dữ liệu trong môi trường kỹ thuật số.")
-                                .handleTime(5)
                                 .benefits(List.of(
                                         "Bảo vệ thông tin nhạy cảm.",
                                         "Giảm thiểu rủi ro về an ninh mạng.",
                                         "Tăng cường niềm tin của khách hàng."
                                 ))
-                                .price(9000000)
                                 .build()
                 );
                 serviceRepository.save(
@@ -324,13 +309,11 @@ public class ApplicationConfiguration {
                                 .description("Giám sát bảo mật thông tin liên quan đến việc quan sát và phân tích liên tục " +
                                         "các hệ thống CNTT của tổ chức để phát hiện và ứng phó với các mối đe dọa bảo mật theo thời gian thực. " +
                                         "Nó giúp doanh nghiệp duy trì một môi trường an toàn và nhanh chóng giải quyết các sự cố tiềm ẩn.")
-                                .handleTime(3)
                                 .benefits(List.of(
                                         "Phát hiện và ứng phó kịp thời với các mối đe dọa.",
                                         "Duy trì an ninh liên tục cho hệ thống CNTT.",
                                         "Tăng cường khả năng phản ứng trước sự cố."
                                 ))
-                                .price(7500000)
                                 .build()
                 );
 
@@ -341,13 +324,11 @@ public class ApplicationConfiguration {
                                 .description("Hỗ trợ CNTT cung cấp sự trợ giúp kỹ thuật cho các tổ chức, giúp khắc phục " +
                                         "và giải quyết các vấn đề liên quan đến phần cứng, phần mềm, mạng và bảo mật. Dịch vụ hỗ trợ CNTT đảm bảo " +
                                         "hoạt động trơn tru và thời gian ngừng hoạt động tối thiểu cho các hệ thống quan trọng.")
-                                .handleTime(2)
                                 .benefits(List.of(
                                         "Giải quyết vấn đề nhanh chóng.",
                                         "Đảm bảo hệ thống hoạt động liên tục.",
                                         "Tăng cường hiệu suất làm việc của nhân viên."
                                 ))
-                                .price(3000000)
                                 .build()
                 );
                 serviceRepository.save(
@@ -357,13 +338,11 @@ public class ApplicationConfiguration {
                                 .description("Tư vấn xây dựng hệ thống giám sát bảo mật liên quan đến việc tư vấn cho doanh nghiệp về " +
                                         "thiết kế, triển khai và quản lý cơ sở hạ tầng giám sát bảo mật. Các dịch vụ này giúp " +
                                         "đảm bảo rằng các tổ chức có khả năng phát hiện và ứng phó với các mối đe dọa bảo mật tiềm ẩn theo thời gian thực.")
-                                .handleTime(5)
                                 .benefits(List.of(
                                         "Tối ưu hóa thiết kế hệ thống bảo mật.",
                                         "Đảm bảo tính sẵn có của hệ thống giám sát.",
                                         "Cải thiện khả năng phát hiện sự cố."
                                 ))
-                                .price(12000000)
                                 .build()
                 );
 
@@ -374,13 +353,11 @@ public class ApplicationConfiguration {
                                 .description("Tư vấn xây dựng Hệ thống Quản lý Bảo mật Thông tin (ISMS) liên quan đến " +
                                         "hướng dẫn các tổ chức thiết lập, triển khai, duy trì và cải tiến liên tục " +
                                         "một hệ thống quản lý bảo mật để bảo vệ dữ liệu nhạy cảm và đảm bảo tuân thủ các tiêu chuẩn bảo mật.")
-                                .handleTime(5)
                                 .benefits(List.of(
                                         "Đảm bảo tuân thủ các tiêu chuẩn bảo mật.",
                                         "Bảo vệ thông tin nhạy cảm và tài sản của tổ chức.",
                                         "Cải thiện quy trình quản lý an ninh."
                                 ))
-                                .price(15000000)
                                 .build()
                 );
                 serviceRepository.save(
@@ -390,13 +367,11 @@ public class ApplicationConfiguration {
                                 .description("Hỗ trợ quản trị hệ thống bảo mật liên quan đến việc quản lý và duy trì cơ sở hạ tầng " +
                                         "bảo mật của tổ chức, bao gồm tường lửa, hệ thống phát hiện xâm nhập và công cụ giám sát bảo mật. " +
                                         "Dịch vụ này đảm bảo rằng các hệ thống bảo mật hoạt động hiệu quả và phản ứng với các mối đe dọa mới nổi.")
-                                .handleTime(3)
                                 .benefits(List.of(
                                         "Đảm bảo hoạt động hiệu quả của hệ thống bảo mật.",
                                         "Giảm thiểu rủi ro từ các mối đe dọa mới.",
                                         "Tăng cường sự bảo vệ thông tin của tổ chức."
                                 ))
-                                .price(8000000)
                                 .build()
                 );
 
@@ -406,13 +381,11 @@ public class ApplicationConfiguration {
                                 .category(categoryRepository.findById(5).orElse(null))  // Adjust category ID as needed
                                 .description("Hỗ trợ kỹ thuật cho các hệ thống cơ sở dữ liệu bao gồm khắc phục sự cố, bảo trì và giám sát hiệu suất. " +
                                         "Dịch vụ này đảm bảo sự ổn định và hiệu quả của hoạt động cơ sở dữ liệu trong khi giải quyết bất kỳ vấn đề kỹ thuật nào phát sinh.")
-                                .handleTime(3)
                                 .benefits(List.of(
                                         "Đảm bảo hoạt động ổn định của cơ sở dữ liệu.",
                                         "Tối ưu hóa hiệu suất hệ thống.",
                                         "Giảm thiểu thời gian ngừng hoạt động."
                                 ))
-                                .price(6000000)
                                 .build()
                 );
                 serviceRepository.save(
@@ -421,13 +394,11 @@ public class ApplicationConfiguration {
                                 .category(categoryRepository.findById(5).orElse(null))  // Adjust category ID as needed
                                 .description("Dịch vụ Khả năng Liên tục Kinh doanh và Phục hồi Sau Thảm họa (BC/DR) giúp các tổ chức lập kế hoạch cho " +
                                         "và ứng phó với những gián đoạn tiềm tàng. Dịch vụ này đảm bảo rằng các chức năng kinh doanh quan trọng vẫn hoạt động trong thời gian khủng hoảng.")
-                                .handleTime(7)
                                 .benefits(List.of(
                                         "Đảm bảo khả năng phục hồi sau thảm họa.",
                                         "Giảm thiểu thiệt hại cho tổ chức.",
                                         "Bảo vệ tài sản và tài nguyên quan trọng."
                                 ))
-                                .price(15000000)
                                 .build()
                 );
                 serviceRepository.save(
@@ -436,13 +407,11 @@ public class ApplicationConfiguration {
                                 .category(categoryRepository.findById(5).orElse(null))  // Adjust category ID as needed
                                 .description("Dịch vụ nâng cấp và chuyển đổi hệ thống dữ liệu bao gồm việc di chuyển cơ sở dữ liệu, nâng cấp hệ thống, " +
                                         "và đảm bảo tính toàn vẹn của dữ liệu trong quá trình chuyển đổi. Dịch vụ này hỗ trợ doanh nghiệp trong việc hiện đại hóa hạ tầng dữ liệu của họ.")
-                                .handleTime(4)
                                 .benefits(List.of(
                                         "Cải thiện hiệu suất hệ thống dữ liệu.",
                                         "Đảm bảo tính toàn vẹn dữ liệu trong quá trình chuyển đổi.",
                                         "Hỗ trợ doanh nghiệp trong việc hiện đại hóa cơ sở hạ tầng."
                                 ))
-                                .price(10000000)
                                 .build()
                 );
                 serviceRepository.save(
@@ -451,13 +420,11 @@ public class ApplicationConfiguration {
                                 .category(categoryRepository.findById(5).orElse(null))  // Adjust category ID as needed
                                 .description("Dịch vụ này theo dõi một cách chủ động tình trạng vận hành của hệ thống cơ sở dữ liệu, cung cấp các cảnh báo theo thời gian thực " +
                                         "về các vấn đề tiềm ẩn như suy giảm hiệu suất, rủi ro bảo mật và sự cố hệ thống. Nó giúp doanh nghiệp thực hiện các biện pháp phòng ngừa.")
-                                .handleTime(2)
                                 .benefits(List.of(
                                         "Giảm thiểu rủi ro và gián đoạn.",
                                         "Cải thiện hiệu suất hệ thống.",
                                         "Tăng cường khả năng kiểm soát hệ thống."
                                 ))
-                                .price(5000000)
                                 .build()
                 );
             }
@@ -465,25 +432,25 @@ public class ApplicationConfiguration {
                 stageRepository.save(
                         Stage.builder()
                                 .id(1)
-                                .name("RECEIVED REQUEST")
+                                .name("Tiếp nhận yêu cầu")
                                 .build()
                 );
                 stageRepository.save(
                         Stage.builder()
                                 .id(2)
-                                .name("CONFIRMED REQUEST")
+                                .name("Xác nhận yêu cầu")
                                 .build()
                 );
                 stageRepository.save(
                         Stage.builder()
                                 .id(3)
-                                .name("HANDLED REQUEST")
+                                .name("Xử lí yêu cầu")
                                 .build()
                 );
                 stageRepository.save(
                         Stage.builder()
                                 .id(4)
-                                .name("DONE")
+                                .name("Hoàn thành")
                                 .build()
                 );
             }

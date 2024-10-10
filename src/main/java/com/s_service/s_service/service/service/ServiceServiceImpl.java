@@ -36,6 +36,9 @@ public class ServiceServiceImpl implements ServiceService {
     public ServiceResponse getServiceById(int id) {
         com.s_service.s_service.model.Service service = serviceRepository.findById(id)
                 .orElseThrow(() -> new AppException(ErrorCode.SERVICE_NOT_FOUND));
+        if (service.getServiceStatus() == com.s_service.s_service.model.Service.ServiceStatus.DELETED) {
+            throw new AppException(ErrorCode.SERVICE_NOT_FOUND);
+        }
         return serviceMapper.toServiceResponse(service);
     }
 

@@ -31,7 +31,8 @@ public class Service {
     private List<String> benefits;
 
     @Enumerated(EnumType.STRING)
-    private ServiceStatus serviceStatus;
+    @Column(name = "status")
+    private ServiceStatus serviceStatus = ServiceStatus.AVAILABLE;
 
     @JsonBackReference
     @ManyToOne

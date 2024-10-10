@@ -16,4 +16,6 @@ public interface CategoryService {
     List<GetCategoryResponse> getAllCategories();
 
     GetCategoryResponse updateCategory(int id, CategoryCreationRequest request);
+
+    void deleteCategory(int id);
 }

@@ -87,4 +87,18 @@ public class CategoryServiceImpl implements CategoryService {
 
         return categoryMapper.toGetCategoryResponse(category);
     }
+
+    @Override
+    public void deleteCategory(int id) {
+        Category category = categoryRepository.findById(id).orElseThrow(
+                () -> new AppException(ErrorCode.CATEGORY_NOT_FOUND)
+        );
+        category.setCategoryStatus(Category.CategoryStatus.DELETED);
+        List<com.s_service.s_service.model.Service> services = category.getServices();
+        if (!services.isEmpty()) {
+            services.forEach((service -> {
+                service.setServiceStatus(com.s_service.s_service.model.Service.ServiceStatus.DELETED);
+            }));
+        }
+    }
 }

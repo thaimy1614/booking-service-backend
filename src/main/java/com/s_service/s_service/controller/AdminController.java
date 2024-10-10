@@ -97,6 +97,18 @@ public class AdminController {
         return ApiResponse.<Boolean>builder().result(true).build();
     }
 
+    @DeleteMapping("/category/{categoryId}")
+    ApiResponse<Boolean> deleteCategory(@PathVariable int categoryId) {
+        categoryService.deleteCateggory(categoryId);
+        return ApiResponse.<Boolean>builder().result(true).build();
+    }
+
+    @DeleteMapping("/service/{serviceId}")
+    ApiResponse<Boolean> deleteService(@PathVariable int serviceId) {
+        serviceService.deleteService(serviceId);
+        return ApiResponse.<Boolean>builder().result(true).build();
+    }
+
     @PutMapping("/user/{userId}")
     ApiResponse<ProfileResponse> updateUserProfile(
             @PathVariable("userId") String userId,

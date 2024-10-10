@@ -25,17 +25,20 @@ public class Service {
     @Column(length = 500)
     private String description;
 
-    private int price;
-
-    private int handleTime;
-
     @Column(name = "benefits")
     @ColumnTransformer(write = "?::jsonb")
     @Convert(converter = JsonbConverter.class)
     private List<String> benefits;
 
+    @Enumerated(EnumType.STRING)
+    private ServiceStatus serviceStatus;
+
     @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
+
+    public enum ServiceStatus{
+        AVAILABLE, DELETED
+    }
 }

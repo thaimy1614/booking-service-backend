@@ -25,6 +25,9 @@ public class Category {
     @Column(length = 500)
     private String description;
 
+    @Enumerated(EnumType.STRING)
+    private CategoryStatus categoryStatus;
+
     @Column(name = "benefits")
     @Convert(converter = JsonbConverter.class)
     @ColumnTransformer(write = "?::jsonb")
@@ -33,4 +36,8 @@ public class Category {
     @OneToMany(mappedBy = "category", targetEntity = Service.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonManagedReference
     private List<Service> services;
+
+    public enum CategoryStatus{
+        AVAILABLE, DELETED
+    }
 }

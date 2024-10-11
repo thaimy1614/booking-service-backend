@@ -4,7 +4,6 @@ import com.s_service.s_service.dto.response.order.CategoryAnalysisResponse;
 import com.s_service.s_service.dto.response.order.OrderResponse;
 import com.s_service.s_service.exception.AppException;
 import com.s_service.s_service.exception.ErrorCode;
-import com.s_service.s_service.model.Category;
 import com.s_service.s_service.model.Order;
 import com.s_service.s_service.model.Profile;
 import com.s_service.s_service.repository.CategoryRepository;
@@ -13,7 +12,6 @@ import com.s_service.s_service.repository.ProfileRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
@@ -22,7 +20,6 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService{
     private final OrderRepository orderRepository;
-    private final CategoryRepository categoryRepository;
     private final ProfileRepository profileRepository;
 
     @Override
@@ -71,16 +68,17 @@ public class OrderServiceImpl implements OrderService{
         Profile profile = profileRepository.findById(userId).orElseThrow(
                 () -> new AppException(ErrorCode.PROFILE_NOT_FOUND)
         );
-        List<Order> orders = orderRepository.findAllByProfile(profile);
+        List<Order> orders = orderRepository.findAllByEmail(profile.getEmail());
         return orders.stream().map(order -> OrderResponse.builder()
                 .orderId(order.getId())
-                .name(order.getProfile().getName())
-                .email(order.getProfile().getEmail())
+                .name(order.getName())
+                .email(order.getEmail())
                 .serviceName(order.getService().getName())
                 .createdDate(order.getCreatedDate())
                 .updatedDate(order.getUpdatedDate())
                 .status(order.getStatus())
                 .paymentMethod(order.getPaymentMethod())
+                .stageName(order.getStage().getName())
                 .build()).toList();
     }
 
@@ -89,18 +87,19 @@ public class OrderServiceImpl implements OrderService{
         Profile profile = profileRepository.findById(userId).orElseThrow(
                 () -> new AppException(ErrorCode.PROFILE_NOT_FOUND)
         );
-        Order order = orderRepository.findByIdAndProfile(orderId, profile).orElseThrow(
+        Order order = orderRepository.findByIdAndEmail(orderId, profile.getEmail()).orElseThrow(
                 () -> new AppException(ErrorCode.ORDER_NOT_FOUND)
         );
         return OrderResponse.builder()
                 .orderId(order.getId())
-                .name(order.getProfile().getName())
-                .email(order.getProfile().getEmail())
+                .name(order.getName())
+                .email(order.getEmail())
                 .serviceName(order.getService().getName())
                 .createdDate(order.getCreatedDate())
                 .updatedDate(order.getUpdatedDate())
                 .status(order.getStatus())
                 .paymentMethod(order.getPaymentMethod())
+                .stageName(order.getStage().getName())
                 .build();
     }
 

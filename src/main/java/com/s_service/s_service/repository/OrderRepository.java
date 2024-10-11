@@ -12,9 +12,9 @@ import java.util.Optional;
 public interface OrderRepository extends JpaRepository<Order, String> {
     List<Order> findAllByStatus(Order.OrderStatus status);
 
-    Optional<Order> findByIdAndProfile(String id, Profile profile);
+    Optional<Order> findByIdAndEmail(String id, String email);
 
-    List<Order> findAllByProfile(Profile profile);
+    List<Order> findAllByEmail(String email);
 
     @Query("SELECT c.name, COUNT(o) " +
             "FROM Order o " +

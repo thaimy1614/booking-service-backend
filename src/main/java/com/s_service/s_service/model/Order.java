@@ -29,9 +29,9 @@ public class Order {
     @JoinColumn(name = "stage_id")
     private Stage stage;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "profile_id")
-    private Profile profile;
+    private String name;
+
+    private String email;
 
     @Column(name = "created_date")
     @CreationTimestamp

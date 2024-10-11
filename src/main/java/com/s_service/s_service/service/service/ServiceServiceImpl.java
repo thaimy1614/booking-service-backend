@@ -50,6 +50,7 @@ public class ServiceServiceImpl implements ServiceService {
         service.setDescription(serviceRequest.getDescription());
         service.setName(serviceRequest.getName());
         service.setCategory(category);
+        service.setServiceStatus(com.s_service.s_service.model.Service.ServiceStatus.AVAILABLE);
         service.setBenefits(Arrays.asList(serviceRequest.getBenefits()));
         ServiceResponse response = serviceMapper.toServiceResponse(serviceRepository.save(service));
         response.setCategoryName(serviceRequest.getCategoryName());
@@ -77,5 +78,14 @@ public class ServiceServiceImpl implements ServiceService {
     @Override
     public Long countServices() {
         return serviceRepository.count();
+    }
+
+    @Override
+    public void deleteService(int id) {
+        com.s_service.s_service.model.Service service = serviceRepository.findById(id).orElseThrow(
+                () -> new AppException(ErrorCode.SERVICE_NOT_FOUND)
+        );
+        service.setServiceStatus(com.s_service.s_service.model.Service.ServiceStatus.DELETED);
+        serviceRepository.save(service);
     }
 }

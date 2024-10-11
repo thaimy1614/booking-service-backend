@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.ColumnTransformer;
 
 import java.util.List;
@@ -32,7 +33,7 @@ public class Service {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
-    private ServiceStatus serviceStatus = ServiceStatus.AVAILABLE;
+    private ServiceStatus serviceStatus;
 
     @JsonBackReference
     @ManyToOne

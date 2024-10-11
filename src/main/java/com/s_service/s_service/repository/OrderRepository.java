@@ -1,14 +1,20 @@
 package com.s_service.s_service.repository;
 
 import com.s_service.s_service.model.Order;
+import com.s_service.s_service.model.Profile;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface OrderRepository extends JpaRepository<Order, String> {
     List<Order> findAllByStatus(Order.OrderStatus status);
+
+    Optional<Order> findByIdAndProfile(String id, Profile profile);
+
+    List<Order> findAllByProfile(Profile profile);
 
     @Query("SELECT c.name, COUNT(o) " +
             "FROM Order o " +

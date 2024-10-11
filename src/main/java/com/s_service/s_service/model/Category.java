@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.ColumnTransformer;
 
 import java.util.List;
@@ -27,7 +28,8 @@ public class Category {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
-    private CategoryStatus categoryStatus = CategoryStatus.AVAILABLE;
+    @ColumnDefault("'AVAILABLE'")
+    private CategoryStatus categoryStatus;
 
     @Column(name = "benefits")
     @Convert(converter = JsonbConverter.class)

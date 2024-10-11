@@ -8,6 +8,7 @@ import com.s_service.s_service.exception.ErrorCode;
 import com.s_service.s_service.mapper.CategoryMapper;
 import com.s_service.s_service.model.Category;
 import com.s_service.s_service.repository.CategoryRepository;
+import com.s_service.s_service.repository.ServiceRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +20,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class CategoryServiceImpl implements CategoryService {
     private final CategoryRepository categoryRepository;
+    private final ServiceRepository serviceRepository;
     private final CategoryMapper categoryMapper;
 
     @Override
@@ -27,6 +29,7 @@ public class CategoryServiceImpl implements CategoryService {
         category.setName(request.getName());
         category.setDescription(request.getDescription());
         category.setBenefits(Arrays.asList(request.getBenefits()));
+        category.setCategoryStatus(Category.CategoryStatus.AVAILABLE);
         category = categoryRepository.save(category);
         return categoryMapper.toGetCategoryResponse(category);
     }
@@ -98,6 +101,7 @@ public class CategoryServiceImpl implements CategoryService {
         if (!services.isEmpty()) {
             services.forEach((service -> {
                 service.setServiceStatus(com.s_service.s_service.model.Service.ServiceStatus.DELETED);
+                serviceRepository.save(service);
             }));
         }
     }

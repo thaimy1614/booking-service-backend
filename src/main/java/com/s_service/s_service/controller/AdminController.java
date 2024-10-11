@@ -99,7 +99,7 @@ public class AdminController {
 
     @DeleteMapping("/category/{categoryId}")
     ApiResponse<Boolean> deleteCategory(@PathVariable int categoryId) {
-        categoryService.deleteCateggory(categoryId);
+        categoryService.deleteCategory(categoryId);
         return ApiResponse.<Boolean>builder().result(true).build();
     }
 

@@ -5,6 +5,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import java.time.LocalDate;
 
 @Data
 @NoArgsConstructor
@@ -29,6 +33,14 @@ public class Order {
     @JoinColumn(name = "profile_id")
     private Profile profile;
 
+    @Column(name = "created_date")
+    @CreationTimestamp
+    private LocalDate createdDate;
+
+    @Column(name = "updated_date")
+    @UpdateTimestamp
+    private LocalDate updatedDate;
+
     private Long price;
 
     @Enumerated(EnumType.STRING)
@@ -40,7 +52,7 @@ public class Order {
 
     public enum OrderStatus {
         PENDING,
-        REJECTED,
+        DELETED,
         DONE
     }
 

@@ -15,4 +15,6 @@ public interface ServiceService {
     ServiceResponse updateService(int id, ServiceRequest serviceRequest);
 
     Long countServices();
+
+    void deleteService(int id);
 }

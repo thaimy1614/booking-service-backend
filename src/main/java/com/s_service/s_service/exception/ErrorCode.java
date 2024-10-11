@@ -24,6 +24,7 @@ public enum ErrorCode {
     SERVICE_EXISTED(1015, "Service existed", HttpStatus.NOT_FOUND),
     UNVERIFIED_ACCOUNT(1016, "User not verified yet", HttpStatus.LOCKED),
     PROFILE_NOT_FOUND(1017, "Profile not found", HttpStatus.NOT_FOUND),
+    ORDER_NOT_FOUND(1018, "Order not found", HttpStatus.NOT_FOUND),
     ;
 
     private final int code;

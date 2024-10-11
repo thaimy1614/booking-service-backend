@@ -1,10 +1,15 @@
 package com.s_service.s_service.service.order;
 
 import com.s_service.s_service.dto.response.order.CategoryAnalysisResponse;
+import com.s_service.s_service.dto.response.order.OrderResponse;
+import com.s_service.s_service.exception.AppException;
+import com.s_service.s_service.exception.ErrorCode;
 import com.s_service.s_service.model.Category;
 import com.s_service.s_service.model.Order;
+import com.s_service.s_service.model.Profile;
 import com.s_service.s_service.repository.CategoryRepository;
 import com.s_service.s_service.repository.OrderRepository;
+import com.s_service.s_service.repository.ProfileRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +23,7 @@ import java.util.stream.Collectors;
 public class OrderServiceImpl implements OrderService{
     private final OrderRepository orderRepository;
     private final CategoryRepository categoryRepository;
+    private final ProfileRepository profileRepository;
 
     @Override
     public Long countOrders() {
@@ -60,6 +66,43 @@ public class OrderServiceImpl implements OrderService{
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public List<OrderResponse> getMyAllOrders(String userId) {
+        Profile profile = profileRepository.findById(userId).orElseThrow(
+                () -> new AppException(ErrorCode.PROFILE_NOT_FOUND)
+        );
+        List<Order> orders = orderRepository.findAllByProfile(profile);
+        return orders.stream().map(order -> OrderResponse.builder()
+                .orderId(order.getId())
+                .name(order.getProfile().getName())
+                .email(order.getProfile().getEmail())
+                .serviceName(order.getService().getName())
+                .createdDate(order.getCreatedDate())
+                .updatedDate(order.getUpdatedDate())
+                .status(order.getStatus())
+                .paymentMethod(order.getPaymentMethod())
+                .build()).toList();
+    }
+
+    @Override
+    public OrderResponse getMyOrder(String userId, String orderId) {
+        Profile profile = profileRepository.findById(userId).orElseThrow(
+                () -> new AppException(ErrorCode.PROFILE_NOT_FOUND)
+        );
+        Order order = orderRepository.findByIdAndProfile(orderId, profile).orElseThrow(
+                () -> new AppException(ErrorCode.ORDER_NOT_FOUND)
+        );
+        return OrderResponse.builder()
+                .orderId(order.getId())
+                .name(order.getProfile().getName())
+                .email(order.getProfile().getEmail())
+                .serviceName(order.getService().getName())
+                .createdDate(order.getCreatedDate())
+                .updatedDate(order.getUpdatedDate())
+                .status(order.getStatus())
+                .paymentMethod(order.getPaymentMethod())
+                .build();
+    }
 
 
 }

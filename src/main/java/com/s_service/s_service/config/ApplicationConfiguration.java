@@ -79,6 +79,7 @@ public class ApplicationConfiguration {
                                         "Truy cập mọi lúc, mọi nơi",
                                         "Bảo mật nâng cao"
                                 ))
+                                .categoryStatus(Category.CategoryStatus.AVAILABLE)
                                 .build()
                 );
                 categoryRepository.save(
@@ -91,6 +92,8 @@ public class ApplicationConfiguration {
                                         "Tối ưu hóa hiệu suất",
                                         "Đảm bảo tính liên tục"
                                 ))
+                                .categoryStatus(Category.CategoryStatus.AVAILABLE)
+
                                 .build()
                 );
                 categoryRepository.save(
@@ -103,6 +106,8 @@ public class ApplicationConfiguration {
                                         "Bảo mật và khả năng phục hồi",
                                         "Tính linh hoạt và khả năng mở rộng"
                                 ))
+                                .categoryStatus(Category.CategoryStatus.AVAILABLE)
+
                                 .build()
                 );
                 categoryRepository.save(
@@ -115,6 +120,8 @@ public class ApplicationConfiguration {
                                         "Giảm rủi ro",
                                         "Tăng cường uy tín"
                                 ))
+                                .categoryStatus(Category.CategoryStatus.AVAILABLE)
+
                                 .build()
                 );
                 categoryRepository.save(
@@ -127,6 +134,8 @@ public class ApplicationConfiguration {
                                         "Tăng cường khả năng phân tích",
                                         "Thúc đẩy chuyển đổi số"
                                 ))
+                                .categoryStatus(Category.CategoryStatus.AVAILABLE)
+
                                 .build()
                 );
 
@@ -138,7 +147,7 @@ public class ApplicationConfiguration {
                                 .name("Brand Research")
                                 .category(categoryRepository.findById(1).orElse(null))
                                 .description("Nghiên cứu thương hiệu là quá trình thu thập và phân tích dữ liệu về danh tính, vị trí thị trường, nhận thức của khách hàng và hiệu suất tổng thể của một thương hiệu. Nó giúp các doanh nghiệp hiểu cách khách hàng nhìn nhận thương hiệu của họ, xác định điểm mạnh và điểm yếu, và phát triển các chiến lược để cải thiện nhận thức thương hiệu, lòng trung thành và thị phần.")
-
+                                .serviceStatus(Service.ServiceStatus.AVAILABLE)
                                 .benefits(List.of(
                                         "Brand Research giúp doanh nghiệp nắm bắt được cách khách hàng nhìn nhận về thương hiệu của mình, bao gồm các yếu tố như logo, thông điệp.",
                                         "Hiểu nhận thức của khách hàng.",
@@ -150,6 +159,7 @@ public class ApplicationConfiguration {
                                 .name("Online Survey")
                                 .category(categoryRepository.findById(1).orElse(null))
                                 .description("Khảo sát trực tuyến là một bảng câu hỏi kỹ thuật số được thiết kế để thu thập thông tin từ người tham gia qua internet. Khảo sát trực tuyến được sử dụng rộng rãi trong các ngành khác nhau cho nghiên cứu thị trường, phản hồi của khách hàng, nghiên cứu học thuật và sự tham gia của nhân viên. Chúng cung cấp một cách nhanh chóng, mở rộng và hiệu quả về chi phí để thu thập một lượng lớn dữ liệu từ một đối tượng rộng.")
+                                .serviceStatus(Service.ServiceStatus.AVAILABLE)
 
                                 .benefits(List.of(
                                         "Thu thập dữ liệu nhanh chóng và hiệu quả.",
@@ -163,6 +173,7 @@ public class ApplicationConfiguration {
                                 .name("Strategic Consulting")
                                 .category(categoryRepository.findById(1).orElse(null))
                                 .description("Tư vấn chiến lược liên quan đến việc giúp các doanh nghiệp xác định các chiến lược dài hạn và xác định cơ hội tăng trưởng, cải tiến và lợi thế cạnh tranh. Các chuyên gia tư vấn phân tích xu hướng thị trường, hiệu quả hoạt động và cấu trúc tổ chức để cung cấp những hiểu biết có thể hành động.")
+                                .serviceStatus(Service.ServiceStatus.AVAILABLE)
 
                                 .benefits(List.of(
                                         "Xác định chiến lược dài hạn hiệu quả.",
@@ -176,6 +187,7 @@ public class ApplicationConfiguration {
                                 .name("Storage")
                                 .category(categoryRepository.findById(1).orElse(null))
                                 .description("Dịch vụ lưu trữ cung cấp các giải pháp lưu trữ dữ liệu có khả năng mở rộng và bảo mật, từ lưu trữ trên đám mây đến các tùy chọn tại chỗ. Những dịch vụ này đảm bảo rằng dữ liệu có thể truy cập, bền vững và được bảo vệ khỏi mất mát hoặc truy cập trái phép.")
+                                .serviceStatus(Service.ServiceStatus.AVAILABLE)
 
                                 .benefits(List.of(
                                         "Dữ liệu luôn sẵn có và bảo mật.",
@@ -189,6 +201,7 @@ public class ApplicationConfiguration {
                                 .name("Compute")
                                 .category(categoryRepository.findById(1).orElse(null))
                                 .description("Dịch vụ tính toán cung cấp sức mạnh xử lý cần thiết để chạy các ứng dụng, thực hiện phân tích dữ liệu và xử lý các tác vụ tính toán quy mô lớn trong các môi trường đám mây. Những dịch vụ này cho phép các doanh nghiệp mở rộng tài nguyên tính toán dựa trên nhu cầu.")
+                                .serviceStatus(Service.ServiceStatus.AVAILABLE)
 
                                 .benefits(List.of(
                                         "Tăng cường sức mạnh xử lý cho ứng dụng.",
@@ -202,6 +215,7 @@ public class ApplicationConfiguration {
                                 .name("Developer Tools")
                                 .category(categoryRepository.findById(1).orElse(null))
                                 .description("Công cụ phát triển bao gồm một loạt phần mềm và dịch vụ hỗ trợ việc phát triển, kiểm tra, triển khai và quản lý các ứng dụng. Những công cụ này đơn giản hóa chu trình phát triển, giúp việc lập trình, gỡ lỗi và cộng tác trở nên dễ dàng và hiệu quả hơn.")
+                                .serviceStatus(Service.ServiceStatus.AVAILABLE)
 
                                 .benefits(List.of(
                                         "Giúp tối ưu hóa quy trình phát triển.",
@@ -215,6 +229,7 @@ public class ApplicationConfiguration {
                                 .name("Networking & Content Delivery")
                                 .category(categoryRepository.findById(1).orElse(null))
                                 .description("Dịch vụ mạng và phân phối nội dung cho phép các doanh nghiệp cung cấp nội dung web, phương tiện và ứng dụng một cách nhanh chóng và bảo mật trên toàn cầu. Mạng lưới phân phối nội dung (CDN) tối ưu hóa độ trễ, trong khi các giải pháp mạng đảm bảo giao tiếp đáng tin cậy giữa các thiết bị và hệ thống.")
+                                .serviceStatus(Service.ServiceStatus.AVAILABLE)
 
                                 .benefits(List.of(
                                         "Cải thiện tốc độ tải trang web.",
@@ -228,6 +243,7 @@ public class ApplicationConfiguration {
                                 .name("Management Tools")
                                 .category(categoryRepository.findById(1).orElse(null))
                                 .description("Các công cụ quản lý giúp doanh nghiệp giám sát, quản lý và tự động hóa các tác vụ trong hạ tầng CNTT, đảm bảo hiệu suất tối ưu, phân bổ tài nguyên và hiệu quả hoạt động. Chúng cung cấp cái nhìn tổng quan về tình trạng hệ thống và cho phép giải quyết vấn đề một cách chủ động.")
+                                .serviceStatus(Service.ServiceStatus.AVAILABLE)
 
                                 .benefits(List.of(
                                         "Giám sát tình trạng hệ thống dễ dàng.",
@@ -241,6 +257,7 @@ public class ApplicationConfiguration {
                                 .name("Analysis")
                                 .category(categoryRepository.findById(1).orElse(null))
                                 .description("Các dịch vụ phân tích cung cấp công cụ và kỹ thuật để phân tích dữ liệu doanh nghiệp, xác định xu hướng và đưa ra quyết định thông minh. Những dịch vụ này bao gồm mọi thứ từ phân tích dữ liệu lớn đến các nền tảng trí tuệ doanh nghiệp cung cấp những hiểu biết có thể hành động.")
+                                .serviceStatus(Service.ServiceStatus.AVAILABLE)
 
                                 .benefits(List.of(
                                         "Cung cấp những hiểu biết sâu sắc về dữ liệu.",
@@ -254,6 +271,7 @@ public class ApplicationConfiguration {
                                 .name("Desktop & App Streaming")
                                 .category(categoryRepository.findById(1).orElse(null))
                                 .description("Dịch vụ phát trực tuyến desktop và ứng dụng cho phép người dùng truy cập từ xa các ứng dụng và desktop từ bất kỳ thiết bị nào có kết nối internet. Những dịch vụ này được sử dụng rộng rãi trong các môi trường làm việc ảo và cho việc cung cấp phần mềm đến tay người dùng mà không cần cài đặt tại địa phương.")
+                                .serviceStatus(Service.ServiceStatus.AVAILABLE)
 
                                 .benefits(List.of(
                                         "Truy cập ứng dụng từ xa dễ dàng.",
@@ -274,6 +292,8 @@ public class ApplicationConfiguration {
                                         "Cải thiện tuân thủ quy định.",
                                         "Bảo vệ thông tin nhạy cảm."
                                 ))
+                                .serviceStatus(Service.ServiceStatus.AVAILABLE)
+
                                 .build()
                 );
                 serviceRepository.save(
@@ -286,6 +306,8 @@ public class ApplicationConfiguration {
                                         "Cải thiện chiến lược an ninh mạng.",
                                         "Tăng cường sự tự tin trong bảo mật hệ thống."
                                 ))
+                                .serviceStatus(Service.ServiceStatus.AVAILABLE)
+
                                 .build()
                 );
                 serviceRepository.save(
@@ -300,6 +322,8 @@ public class ApplicationConfiguration {
                                         "Giảm thiểu rủi ro về an ninh mạng.",
                                         "Tăng cường niềm tin của khách hàng."
                                 ))
+                                .serviceStatus(Service.ServiceStatus.AVAILABLE)
+
                                 .build()
                 );
                 serviceRepository.save(
@@ -314,6 +338,8 @@ public class ApplicationConfiguration {
                                         "Duy trì an ninh liên tục cho hệ thống CNTT.",
                                         "Tăng cường khả năng phản ứng trước sự cố."
                                 ))
+                                .serviceStatus(Service.ServiceStatus.AVAILABLE)
+
                                 .build()
                 );
 
@@ -329,6 +355,8 @@ public class ApplicationConfiguration {
                                         "Đảm bảo hệ thống hoạt động liên tục.",
                                         "Tăng cường hiệu suất làm việc của nhân viên."
                                 ))
+                                .serviceStatus(Service.ServiceStatus.AVAILABLE)
+
                                 .build()
                 );
                 serviceRepository.save(
@@ -343,6 +371,8 @@ public class ApplicationConfiguration {
                                         "Đảm bảo tính sẵn có của hệ thống giám sát.",
                                         "Cải thiện khả năng phát hiện sự cố."
                                 ))
+                                .serviceStatus(Service.ServiceStatus.AVAILABLE)
+
                                 .build()
                 );
 
@@ -358,6 +388,8 @@ public class ApplicationConfiguration {
                                         "Bảo vệ thông tin nhạy cảm và tài sản của tổ chức.",
                                         "Cải thiện quy trình quản lý an ninh."
                                 ))
+                                .serviceStatus(Service.ServiceStatus.AVAILABLE)
+
                                 .build()
                 );
                 serviceRepository.save(
@@ -372,6 +404,8 @@ public class ApplicationConfiguration {
                                         "Giảm thiểu rủi ro từ các mối đe dọa mới.",
                                         "Tăng cường sự bảo vệ thông tin của tổ chức."
                                 ))
+                                .serviceStatus(Service.ServiceStatus.AVAILABLE)
+
                                 .build()
                 );
 
@@ -386,6 +420,8 @@ public class ApplicationConfiguration {
                                         "Tối ưu hóa hiệu suất hệ thống.",
                                         "Giảm thiểu thời gian ngừng hoạt động."
                                 ))
+                                .serviceStatus(Service.ServiceStatus.AVAILABLE)
+
                                 .build()
                 );
                 serviceRepository.save(
@@ -399,6 +435,8 @@ public class ApplicationConfiguration {
                                         "Giảm thiểu thiệt hại cho tổ chức.",
                                         "Bảo vệ tài sản và tài nguyên quan trọng."
                                 ))
+                                .serviceStatus(Service.ServiceStatus.AVAILABLE)
+
                                 .build()
                 );
                 serviceRepository.save(
@@ -412,6 +450,8 @@ public class ApplicationConfiguration {
                                         "Đảm bảo tính toàn vẹn dữ liệu trong quá trình chuyển đổi.",
                                         "Hỗ trợ doanh nghiệp trong việc hiện đại hóa cơ sở hạ tầng."
                                 ))
+                                .serviceStatus(Service.ServiceStatus.AVAILABLE)
+
                                 .build()
                 );
                 serviceRepository.save(
@@ -425,6 +465,8 @@ public class ApplicationConfiguration {
                                         "Cải thiện hiệu suất hệ thống.",
                                         "Tăng cường khả năng kiểm soát hệ thống."
                                 ))
+                                .serviceStatus(Service.ServiceStatus.AVAILABLE)
+
                                 .build()
                 );
             }

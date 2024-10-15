@@ -21,11 +21,11 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "service_id")
     private Service service;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "stage_id")
     private Stage stage;
 
@@ -34,11 +34,9 @@ public class Order {
     private String email;
 
     @Column(name = "created_date")
-    @CreationTimestamp
     private LocalDate createdDate;
 
     @Column(name = "updated_date")
-    @UpdateTimestamp
     private LocalDate updatedDate;
 
     private Long price;
@@ -60,5 +58,15 @@ public class Order {
         QR,
         VNPAY,
         BALANCE
+    }
+
+    @PrePersist
+    protected void onCreate() {
+        createdDate = LocalDate.now();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        updatedDate = LocalDate.now();
     }
 }

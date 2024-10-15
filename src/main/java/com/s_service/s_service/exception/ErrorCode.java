@@ -25,6 +25,7 @@ public enum ErrorCode {
     UNVERIFIED_ACCOUNT(1016, "User not verified yet", HttpStatus.LOCKED),
     PROFILE_NOT_FOUND(1017, "Profile not found", HttpStatus.NOT_FOUND),
     ORDER_NOT_FOUND(1018, "Order not found", HttpStatus.NOT_FOUND),
+    STAGE_NOT_FOUND(1019, "Stage not found", HttpStatus.NOT_FOUND),
     ;
 
     private final int code;

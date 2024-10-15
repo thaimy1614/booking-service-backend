@@ -1,5 +1,6 @@
 package com.s_service.s_service.dto.request.order;
 
+import com.s_service.s_service.model.Order;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,6 +9,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class OrderCreationRequest {
-    private String userId;
+    private String name;
+    private String email;
     private int serviceId;
+    private Long price;
+    private int stageId;
+    private Order.OrderStatus status;
 }

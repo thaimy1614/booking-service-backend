@@ -3,10 +3,12 @@ package com.s_service.s_service.controller;
 
 import com.s_service.s_service.dto.ApiResponse;
 import com.s_service.s_service.dto.request.category.CategoryCreationRequest;
+import com.s_service.s_service.dto.request.order.OrderCreationRequest;
 import com.s_service.s_service.dto.request.profile.UpdateProfileRequest;
 import com.s_service.s_service.dto.request.service.ServiceRequest;
 import com.s_service.s_service.dto.response.category.GetCategoryResponse;
 import com.s_service.s_service.dto.response.order.CategoryAnalysisResponse;
+import com.s_service.s_service.dto.response.order.OrderResponse;
 import com.s_service.s_service.dto.response.profile.ProfileResponse;
 import com.s_service.s_service.dto.response.service.ServiceResponse;
 import com.s_service.s_service.service.authentication.AuthenticationService;
@@ -77,6 +79,37 @@ public class AdminController {
                 .message("Analyze category successfully!")
                 .build();
     }
+
+    @GetMapping("/order")
+    ApiResponse<List<OrderResponse>> getAllOrders(){
+        List<OrderResponse> responses = orderService.getAllOrders();
+        return ApiResponse.<List<OrderResponse>>builder()
+                .result(responses)
+                .message("Get all orders successfully!")
+                .build();
+    }
+
+    @PostMapping("/order")
+    ApiResponse<OrderResponse> createOrder(@RequestBody OrderCreationRequest request){
+        OrderResponse response = orderService.createOrder(request);
+        return ApiResponse.<OrderResponse>builder().result(response).build();
+    }
+
+    @PutMapping("/order/{id}")
+    ApiResponse<OrderResponse> updateOrder(
+            @PathVariable String id,
+            @RequestBody OrderCreationRequest request
+    ){
+        OrderResponse response = orderService.updateOrder(id, request);
+        return ApiResponse.<OrderResponse>builder().result(response).build();
+    }
+
+    @DeleteMapping("/order/{id}")
+    ApiResponse<Boolean> deleteOrder(@PathVariable String id){
+        orderService.deleteOrder(id);
+        return ApiResponse.<Boolean>builder().result(true).build();
+    }
+
 
     @GetMapping("/user")
     ApiResponse<Page<ProfileResponse>> getAllProfile(

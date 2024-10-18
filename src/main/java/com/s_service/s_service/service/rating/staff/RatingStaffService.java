@@ -10,4 +10,6 @@ public interface RatingStaffService {
     RatingStaffResponse addStaffRating(RatingStaffRequest ratingStaffRequest);
 
     List<AverageRatingResponse> getAverageRating();
+
+    List<RatingStaffResponse> getRatingByStaffName(String staffName);
 }

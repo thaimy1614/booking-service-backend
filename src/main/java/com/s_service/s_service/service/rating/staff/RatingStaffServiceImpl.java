@@ -28,4 +28,10 @@ public class RatingStaffServiceImpl implements RatingStaffService {
     public List<AverageRatingResponse> getAverageRating() {
         return ratingStaffRepository.findAverageRatingGroupedByStaffName();
     }
+
+    @Override
+    public List<RatingStaffResponse> getRatingByStaffName(String staffName) {
+        List<RatingStaff> ratings = ratingStaffRepository.findRatingStaffByStaffName(staffName);
+        return ratings.stream().map(ratingMapper::toRatingStaffResponse).toList();
+    }
 }

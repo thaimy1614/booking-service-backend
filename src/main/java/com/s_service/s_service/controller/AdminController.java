@@ -11,6 +11,7 @@ import com.s_service.s_service.dto.response.order.CategoryAnalysisResponse;
 import com.s_service.s_service.dto.response.order.OrderResponse;
 import com.s_service.s_service.dto.response.profile.ProfileResponse;
 import com.s_service.s_service.dto.response.rating.staff.AverageRatingResponse;
+import com.s_service.s_service.dto.response.rating.staff.RatingStaffResponse;
 import com.s_service.s_service.dto.response.service.ServiceResponse;
 import com.s_service.s_service.service.authentication.AuthenticationService;
 import com.s_service.s_service.service.category.CategoryService;
@@ -38,6 +39,17 @@ public class AdminController {
     private final OrderService orderService;
     private final AuthenticationService accountService;
     private final RatingStaffService ratingStaffService;
+
+    @GetMapping("/rating-staff/find-by")
+    ApiResponse<List<RatingStaffResponse>> getRatingStaffByStaffName(
+        @RequestParam String name
+    ) {
+        List<RatingStaffResponse> ratingStaffResponses = ratingStaffService.getRatingByStaffName(name);
+        return ApiResponse.<List<RatingStaffResponse>>builder()
+                .message("Get all rating by staff name successfully")
+                .result(ratingStaffResponses)
+                .build();
+    }
 
     @GetMapping("/rating-staff")
     ApiResponse<List<AverageRatingResponse>> getAverageRatingStaff() {

@@ -13,4 +13,6 @@ public interface RatingStaffRepository extends JpaRepository<RatingStaff, Intege
             "FROM RatingStaff r " +
             "GROUP BY r.staffName")
     List<AverageRatingResponse> findAverageRatingGroupedByStaffName();
+
+    List<RatingStaff> findRatingStaffByStaffName(String staffName);
 }

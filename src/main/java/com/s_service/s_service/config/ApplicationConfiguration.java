@@ -474,25 +474,25 @@ public class ApplicationConfiguration {
                 stageRepository.save(
                         Stage.builder()
                                 .id(1)
-                                .name("Tiếp nhận yêu cầu")
+                                .name("Đã tiếp nhận đơn dịch vụ")
                                 .build()
                 );
                 stageRepository.save(
                         Stage.builder()
                                 .id(2)
-                                .name("Xác nhận yêu cầu")
+                                .name("Nhân viên kết nối được với khách hàng")
                                 .build()
                 );
                 stageRepository.save(
                         Stage.builder()
                                 .id(3)
-                                .name("Xử lí yêu cầu")
+                                .name("Tiến hành xử lí dịch vụ")
                                 .build()
                 );
                 stageRepository.save(
                         Stage.builder()
                                 .id(4)
-                                .name("Hoàn thành")
+                                .name("Đã hoàn thành dịch vụ")
                                 .build()
                 );
             }

@@ -9,6 +9,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
@@ -34,19 +35,15 @@ public class Order {
     private String email;
 
     @Column(name = "created_date")
-    private LocalDate createdDate;
+    private LocalDateTime createdDate;
 
     @Column(name = "updated_date")
-    private LocalDate updatedDate;
+    private LocalDateTime updatedDate;
 
     private Long price;
 
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "payment_method")
-    private PaymentMethod paymentMethod;
 
     public enum OrderStatus {
         PENDING,
@@ -54,19 +51,13 @@ public class Order {
         DONE
     }
 
-    public enum PaymentMethod {
-        QR,
-        VNPAY,
-        BALANCE
-    }
-
     @PrePersist
     protected void onCreate() {
-        createdDate = LocalDate.now();
+        createdDate = LocalDateTime.now();
     }
 
     @PreUpdate
     protected void onUpdate() {
-        updatedDate = LocalDate.now();
+        updatedDate = LocalDateTime.now();
     }
 }

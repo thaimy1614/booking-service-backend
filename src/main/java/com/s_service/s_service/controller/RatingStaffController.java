@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("${application.api.prefix}/rating")
+@RequestMapping("${application.api.prefix}/rating-staff")
 public class RatingStaffController {
     private final RatingStaffService ratingStaffService;
 

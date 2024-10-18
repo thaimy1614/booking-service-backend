@@ -10,11 +10,13 @@ import com.s_service.s_service.dto.response.category.GetCategoryResponse;
 import com.s_service.s_service.dto.response.order.CategoryAnalysisResponse;
 import com.s_service.s_service.dto.response.order.OrderResponse;
 import com.s_service.s_service.dto.response.profile.ProfileResponse;
+import com.s_service.s_service.dto.response.rating.staff.AverageRatingResponse;
 import com.s_service.s_service.dto.response.service.ServiceResponse;
 import com.s_service.s_service.service.authentication.AuthenticationService;
 import com.s_service.s_service.service.category.CategoryService;
 import com.s_service.s_service.service.order.OrderService;
 import com.s_service.s_service.service.profile.ProfileService;
+import com.s_service.s_service.service.rating.staff.RatingStaffService;
 import com.s_service.s_service.service.service.ServiceService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -22,6 +24,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -34,6 +37,16 @@ public class AdminController {
     private final ServiceService serviceService;
     private final OrderService orderService;
     private final AuthenticationService accountService;
+    private final RatingStaffService ratingStaffService;
+
+    @GetMapping("/rating-staff")
+    ApiResponse<List<AverageRatingResponse>> getAverageRatingStaff() {
+        List<AverageRatingResponse> averageRatingResponseList = ratingStaffService.getAverageRating();
+        return ApiResponse.<List<AverageRatingResponse>>builder()
+                .message("Get average rating staff successfully!")
+                .result(averageRatingResponseList)
+                .build();
+    }
 
     @GetMapping("/user/count")
     ApiResponse<Long> getUserCount() {

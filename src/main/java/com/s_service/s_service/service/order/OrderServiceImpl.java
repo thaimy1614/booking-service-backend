@@ -120,6 +120,7 @@ public class OrderServiceImpl implements OrderService {
         Order order = new Order();
         order.setEmail(request.getEmail());
         order.setName(request.getName());
+        order.setStaffName(request.getStaffName());
         order.setService(serviceRepository.findById(request.getServiceId()).orElseThrow(
                 () -> new AppException(ErrorCode.SERVICE_NOT_FOUND)
         ));
@@ -144,6 +145,7 @@ public class OrderServiceImpl implements OrderService {
         );
         order.setName(request.getName());
         order.setEmail(request.getEmail());
+        order.setStaffName(request.getStaffName());
         order.setService(serviceRepository.findById(request.getServiceId()).orElseThrow(
                 () -> new AppException(ErrorCode.SERVICE_NOT_FOUND)
         ));

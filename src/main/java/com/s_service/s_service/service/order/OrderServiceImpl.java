@@ -87,6 +87,7 @@ public class OrderServiceImpl implements OrderService {
                 .stageName(order.getStage().getName())
                 .stageId(order.getStage().getId())
                 .serviceId(order.getService().getId())
+                .staffName(order.getStaffName())
                 .build()).toList();
     }
 
@@ -110,6 +111,7 @@ public class OrderServiceImpl implements OrderService {
                 .stageName(order.getStage().getName())
                 .stageId(order.getStage().getId())
                 .serviceId(order.getService().getId())
+                .staffName(order.getStaffName())
                 .build();
     }
 
@@ -131,6 +133,7 @@ public class OrderServiceImpl implements OrderService {
         response.setStageName(order.getStage().getName());
         response.setStageId(order.getStage().getId());
         response.setServiceId(order.getService().getId());
+        response.setStaffName(order.getStaffName());
         return response;
     }
 
@@ -154,6 +157,7 @@ public class OrderServiceImpl implements OrderService {
         response.setStageName(order.getStage().getName());
         response.setStageId(order.getStage().getId());
         response.setServiceId(order.getService().getId());
+        response.setStaffName(order.getStaffName());
         return response;
     }
 
@@ -175,6 +179,7 @@ public class OrderServiceImpl implements OrderService {
                     response.setStageName(order.getStage().getName());
                     response.setStageId(order.getStage().getId());
                     response.setServiceId(order.getService().getId());
+                    response.setStaffName(order.getStaffName());
                     return response;
                 })
                 .toList();

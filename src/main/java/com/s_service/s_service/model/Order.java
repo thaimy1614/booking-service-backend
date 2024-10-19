@@ -34,6 +34,8 @@ public class Order {
 
     private String email;
 
+    private String staffName;
+
     @Column(name = "created_date")
     private LocalDateTime createdDate;
 

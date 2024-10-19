@@ -14,5 +14,6 @@ public class OrderCreationRequest {
     private int serviceId;
     private Long price;
     private int stageId;
+    private String staffName;
     private Order.OrderStatus status;
 }

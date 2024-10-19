@@ -16,6 +16,7 @@ public class OrderResponse {
     private String name;
     private String email;
     private String serviceName;
+    private String staffName;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm")
     private LocalDateTime createdDate;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm")

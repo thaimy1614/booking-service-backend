@@ -7,7 +7,7 @@ import com.s_service.s_service.dto.response.rating.staff.RatingStaffResponse;
 import java.util.List;
 
 public interface RatingStaffService {
-    RatingStaffResponse addStaffRating(RatingStaffRequest ratingStaffRequest);
+    RatingStaffResponse addStaffRating(String email, RatingStaffRequest ratingStaffRequest);
 
     List<AverageRatingResponse> getAverageRating();
 

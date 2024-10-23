@@ -18,8 +18,9 @@ public class RatingStaffServiceImpl implements RatingStaffService {
     private final RatingMapper ratingMapper;
 
     @Override
-    public RatingStaffResponse addStaffRating(RatingStaffRequest ratingStaffRequest) {
+    public RatingStaffResponse addStaffRating(String email, RatingStaffRequest ratingStaffRequest) {
         RatingStaff ratingStaff = ratingMapper.toRatingStaff(ratingStaffRequest);
+        ratingStaff.setEmail(email);
         ratingStaffRepository.save(ratingStaff);
         return ratingMapper.toRatingStaffResponse(ratingStaff);
     }

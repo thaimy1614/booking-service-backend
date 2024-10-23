@@ -7,6 +7,7 @@ import lombok.Data;
 @Builder
 public class RatingStaffResponse {
     private int id;
+    private String email;
     private String staffName;
     private double rating;
     private String feedback;

@@ -17,6 +17,8 @@ public class RatingStaff {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    private String email;
+
     private String staffName;
 
     private double rating;

@@ -30,12 +30,12 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Long countOrders() {
-        return orderRepository.count();
+        return orderRepository.countAllByStatusIsNot(Order.OrderStatus.DELETED);
     }
 
     @Override
     public Long getTotalRevenue() {
-        List<Order> orders = orderRepository.findAllByStatus(Order.OrderStatus.DONE);
+        List<Order> orders = orderRepository.findAllByStatusIsNot(Order.OrderStatus.DELETED);
         AtomicLong totalRevenue = new AtomicLong(0L);
         orders.forEach(order -> {
             totalRevenue.addAndGet(order.getPrice());
@@ -58,7 +58,7 @@ public class OrderServiceImpl implements OrderService {
 //        return responses;
 
 
-        List<Object[]> results = orderRepository.countOrdersByCategory(Order.OrderStatus.DONE);
+        List<Object[]> results = orderRepository.countOrdersByCategory(Order.OrderStatus.DELETED);
 
         // Transform the result into the response
         return results.stream()
